@@ -134,8 +134,8 @@ export default {
         "points-pop": "points-pop 0.5s ease-out forwards",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        display: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Roboto", "system-ui", "sans-serif"],
+        display: ["Roboto", "system-ui", "sans-serif"],
       },
     },
   },
