@@ -28,9 +28,6 @@ export function LearnerNavbar() {
 
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)} title="Go Back">
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 font-display text-xl font-bold text-foreground">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">

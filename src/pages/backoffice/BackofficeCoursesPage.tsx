@@ -12,7 +12,10 @@ import {
   Trash2,
   BookOpen,
   Clock,
-  Users
+  Users,
+  MessageCircle,
+  Mail,
+  Copy
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -24,6 +27,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from '@/components/ui/dropdown-menu';
 import {
   Dialog,
@@ -82,9 +88,22 @@ export default function BackofficeCoursesPage() {
     toast.success('Course created successfully');
   };
 
-  const handleShare = (courseId: string) => {
+  const handleCopyLink = (courseId: string) => {
     navigator.clipboard.writeText(`${window.location.origin}/course/${courseId}`);
     toast.success('Course link copied to clipboard');
+  };
+
+  const handleShareWhatsapp = (courseId: string) => {
+    const url = encodeURIComponent(`${window.location.origin}/course/${courseId}`);
+    const text = encodeURIComponent('Check out this amazing course!');
+    window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+  };
+
+  const handleShareEmail = (courseId: string) => {
+    const url = encodeURIComponent(`${window.location.origin}/course/${courseId}`);
+    const subject = encodeURIComponent('Check out this course');
+    const body = encodeURIComponent(`I found this great course and thought you might like it: ${window.location.origin}/course/${courseId}`);
+    window.open(`https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`, '_blank');
   };
 
   const handleDelete = (courseId: string) => {
@@ -225,10 +244,26 @@ export default function BackofficeCoursesPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleShare(course.id)} className="cursor-pointer">
-                        <Share2 className="mr-2 h-4 w-4" />
-                        Share
-                      </DropdownMenuItem>
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger className="cursor-pointer">
+                          <Share2 className="mr-2 h-4 w-4" />
+                          Share
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem onClick={() => handleShareWhatsapp(course.id)} className="cursor-pointer">
+                            <MessageCircle className="mr-2 h-4 w-4" />
+                            WhatsApp
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleShareEmail(course.id)} className="cursor-pointer">
+                            <Mail className="mr-2 h-4 w-4" />
+                            Gmail
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleCopyLink(course.id)} className="cursor-pointer">
+                            <Copy className="mr-2 h-4 w-4" />
+                            Copy Link
+                          </DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuSub>
                       <DropdownMenuItem asChild className="cursor-pointer">
                         <Link to={`/course/${course.id}`}>
                           <Eye className="mr-2 h-4 w-4" />
@@ -305,10 +340,26 @@ export default function BackofficeCoursesPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem onClick={() => handleShare(course.id)} className="cursor-pointer">
-                        <Share2 className="mr-2 h-4 w-4" />
-                        Share
-                      </DropdownMenuItem>
+                      <DropdownMenuSub>
+                        <DropdownMenuSubTrigger className="cursor-pointer">
+                          <Share2 className="mr-2 h-4 w-4" />
+                          Share
+                        </DropdownMenuSubTrigger>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem onClick={() => handleShareWhatsapp(course.id)} className="cursor-pointer">
+                            <MessageCircle className="mr-2 h-4 w-4" />
+                            WhatsApp
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleShareEmail(course.id)} className="cursor-pointer">
+                            <Mail className="mr-2 h-4 w-4" />
+                            Gmail
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleCopyLink(course.id)} className="cursor-pointer">
+                            <Copy className="mr-2 h-4 w-4" />
+                            Copy Link
+                          </DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuSub>
                       <DropdownMenuItem asChild className="cursor-pointer">
                         <Link to={`/course/${course.id}`}>
                           <Eye className="mr-2 h-4 w-4" />

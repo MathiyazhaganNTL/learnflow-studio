@@ -14,9 +14,11 @@ import {
   HelpCircle,
   Search,
   Download,
-  ExternalLink
+  ExternalLink,
+  ChevronLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -60,6 +62,14 @@ export default function CourseDetailPage() {
     );
   }
 
+  const handleEnroll = () => {
+    // Mock enrollment logic
+    toast.success('Successfully enrolled in the course!');
+    // Ideally update local state or re-fetch
+    // For now, reload or navigate
+    navigate(`/course/${courseId}/learn`);
+  };
+
   const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -86,6 +96,14 @@ export default function CourseDetailPage() {
   return (
     <div className="py-8">
       <div className="container">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-2 pl-0 hover:bg-transparent hover:text-primary">
+            <ChevronLeft className="h-4 w-4" />
+            Back
+          </Button>
+        </div>
+
         {/* Course Header */}
         <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_400px]">
           {/* Left - Info */}
@@ -179,12 +197,12 @@ export default function CourseDetailPage() {
                         Invitation Only
                       </Button>
                     ) : isAuthenticated ? (
-                      <Button className="w-full" size="lg">
+                      <Button className="w-full" size="lg" onClick={handleEnroll}>
                         Enroll Now - Free
                       </Button>
                     ) : (
                       <Button className="w-full" size="lg" asChild>
-                        <Link to="/login">Sign In to Enroll</Link>
+                        <Link to={`/login?redirect=/course/${courseId}`}>Sign In to Enroll</Link>
                       </Button>
                     )}
                   </>

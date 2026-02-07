@@ -31,7 +31,14 @@ export default function RegisterPage() {
 
                 // Auto login after registration
                 await login(email, password, 'learner');
-                navigate('/my-courses');
+
+                const searchParams = new URLSearchParams(window.location.search);
+                const redirect = searchParams.get('redirect');
+                if (redirect) {
+                    navigate(redirect);
+                } else {
+                    navigate('/my-courses');
+                }
             } catch (error) {
                 console.error('Registration failed:', error);
                 toast.error('Registration failed. Please try again.');
@@ -48,19 +55,19 @@ export default function RegisterPage() {
                 <div className="mx-auto w-full max-w-sm lg:w-96">
                     {/* Logo */}
                     <div className="mb-8">
-                        <Link to="/" className="flex items-center gap-2">
+                        <div className="flex items-center gap-2">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-primary">
                                 <GraduationCap className="h-6 w-6 text-primary-foreground" />
                             </div>
                             <span className="text-xl font-bold">LearnSphere</span>
-                        </Link>
+                        </div>
                     </div>
 
                     <div>
                         <h2 className="text-2xl font-bold">Create an account</h2>
                         <p className="mt-2 text-sm text-muted-foreground">
                             Already have an account?{' '}
-                            <Link to="/login" className="font-medium text-primary hover:underline">
+                            <Link to={`/login${window.location.search}`} className="font-medium text-primary hover:underline">
                                 Sign in
                             </Link>
                         </p>

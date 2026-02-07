@@ -21,7 +21,13 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password, selectedRole);
-      navigate(selectedRole === 'learner' ? '/my-courses' : '/backoffice');
+      const searchParams = new URLSearchParams(window.location.search);
+      const redirect = searchParams.get('redirect');
+      if (redirect) {
+        navigate(redirect);
+      } else {
+        navigate(selectedRole === 'learner' ? '/my-courses' : '/backoffice');
+      }
     } catch (error) {
       console.error('Login failed:', error);
     } finally {
@@ -36,19 +42,19 @@ export default function LoginPage() {
         <div className="mx-auto w-full max-w-sm lg:w-96">
           {/* Logo */}
           <div className="mb-8">
-            <Link to="/" className="flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-primary">
                 <GraduationCap className="h-6 w-6 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold">LearnSphere</span>
-            </Link>
+            </div>
           </div>
 
           <div>
             <h2 className="text-2xl font-bold">Welcome back</h2>
             <p className="mt-2 text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <Link to="/register" className="font-medium text-primary hover:underline">
+              <Link to={`/register${window.location.search}`} className="font-medium text-primary hover:underline">
                 Sign up
               </Link>
             </p>
@@ -64,11 +70,10 @@ export default function LoginPage() {
                     key={role}
                     type="button"
                     onClick={() => setSelectedRole(role)}
-                    className={`rounded-lg px-3 py-2 text-sm font-medium capitalize transition-colors ${
-                      selectedRole === role
-                        ? 'bg-primary text-primary-foreground'
-                        : 'bg-card hover:bg-muted'
-                    }`}
+                    className={`rounded-lg px-3 py-2 text-sm font-medium capitalize transition-colors ${selectedRole === role
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card hover:bg-muted'
+                      }`}
                   >
                     {role}
                   </button>
