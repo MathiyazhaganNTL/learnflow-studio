@@ -274,7 +274,7 @@ export default function HomePage() {
         <div className="absolute top-0 left-0 w-full h-[2px] overflow-hidden">
           <div className="w-full h-full bg-gradient-to-r from-transparent via-primary to-accent animate-border-beam"
             style={{
-              // @ts-ignore
+              // @ts-expect-error
               '--duration': '5s',
               offsetPath: 'rect(0 100% 0 0)',
               width: '30%'

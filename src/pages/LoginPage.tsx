@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
+import { AuthIllustration } from '@/components/auth/AuthIllustration';
+import { RoleSelector } from '@/components/auth/RoleSelector';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -76,25 +78,11 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-            {/* Demo Role Selector */}
-            <div className="rounded-lg border border-border bg-muted/30 p-4">
-              <p className="mb-3 text-sm font-medium">Demo: Select a role to login as</p>
-              <div className="grid grid-cols-3 gap-2">
-                {(['learner', 'instructor', 'admin'] as UserRole[]).map((role) => (
-                  <button
-                    key={role}
-                    type="button"
-                    onClick={() => setSelectedRole(role)}
-                    className={`rounded-lg px-3 py-2 text-sm font-medium capitalize transition-colors ${selectedRole === role
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-card hover:bg-muted'
-                      }`}
-                  >
-                    {role}
-                  </button>
-                ))}
-              </div>
-            </div>
+            {/* Role Selector */}
+            <RoleSelector
+              selectedRole={selectedRole}
+              onSelect={(role) => setSelectedRole(role)}
+            />
 
             <div className="space-y-4">
               <div>
@@ -154,17 +142,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right - Image */}
+      {/* Right - Image/Illustration */}
       <div className="relative hidden w-0 flex-1 lg:block">
-        <div className="absolute inset-0 gradient-hero" />
-        <div className="absolute inset-0 flex items-center justify-center p-12">
-          <div className="max-w-md text-center text-primary-foreground">
-            <h3 className="mb-4 text-3xl font-bold">Start learning today</h3>
-            <p className="text-lg opacity-90">
-              Join thousands of learners and unlock your potential with our expert-led courses.
-            </p>
-          </div>
-        </div>
+        <AuthIllustration />
       </div>
     </div>
   );

@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 
+import { AuthIllustration } from '@/components/auth/AuthIllustration';
+
 export default function RegisterPage() {
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -172,17 +174,9 @@ export default function RegisterPage() {
                 </div>
             </div>
 
-            {/* Right - Image */}
+            {/* Right - Image/Illustration */}
             <div className="relative hidden w-0 flex-1 lg:block">
-                <div className="absolute inset-0 gradient-hero" />
-                <div className="absolute inset-0 flex items-center justify-center p-12">
-                    <div className="max-w-md text-center text-primary-foreground">
-                        <h3 className="mb-4 text-3xl font-bold">Join our community</h3>
-                        <p className="text-lg opacity-90">
-                            Get unlimited access to the best courses from top instructors and industry experts.
-                        </p>
-                    </div>
-                </div>
+                <AuthIllustration />
             </div>
         </div>
     );

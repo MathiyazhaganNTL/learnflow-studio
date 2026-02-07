@@ -47,7 +47,7 @@ export function InteractiveCard({
                 <div
                     className="absolute inset-0 animate-border-beam"
                     style={{
-                        // @ts-ignore
+                        // @ts-expect-error
                         '--duration': `${duration}s`,
                         maskImage: `linear-gradient(black, black) content-box, linear-gradient(black, black)`,
                         maskComposite: 'exclude',
@@ -119,7 +119,7 @@ export function HoverCard({
                 <div
                     className="absolute inset-0 animate-border-beam"
                     style={{
-                        // @ts-ignore
+                        // @ts-expect-error
                         '--duration': `3.5s`,
                         maskImage: `linear-gradient(black, black) content-box, linear-gradient(black, black)`,
                         maskComposite: 'exclude',

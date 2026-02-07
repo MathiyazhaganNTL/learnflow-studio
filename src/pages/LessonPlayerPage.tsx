@@ -58,7 +58,7 @@ export default function LessonPlayerPage() {
 
   // Handle navigation to specific lesson from CourseDetailPage
   useEffect(() => {
-    const lessonId = (location.state as any)?.lessonId;
+    const lessonId = (location.state as { lessonId?: string })?.lessonId;
     if (lessonId && lessons.length > 0) {
       const index = lessons.findIndex((l) => l.id === lessonId);
       if (index !== -1) {

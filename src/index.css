@@ -410,3 +410,12 @@
 .animate-border-beam {
   animation: border-beam var(--duration, 4s) linear infinite;
 }
+
+@keyframes mirror-shine {
+  from { transform: translateX(-100%) skewX(-15deg); }
+  to { transform: translateX(200%) skewX(-15deg); }
+}
+
+.animate-mirror-shine {
+  animation: mirror-shine 8s ease-in-out infinite;
+}

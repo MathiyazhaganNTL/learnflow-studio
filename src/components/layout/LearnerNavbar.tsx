@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
 export function LearnerNavbar() {
@@ -19,7 +19,7 @@ export function LearnerNavbar() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks: { href: string; label: string; icon: any }[] = [];
+  const navLinks: { href: string; label: string; icon: React.ElementType }[] = [];
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -29,7 +29,9 @@ export function LearnerNavbar() {
       <div className="absolute inset-0 bg-background/60 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/40" />
 
       {/* Glossy Reflective Shine Effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent pointer-events-none opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent pointer-events-none opacity-50 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-mirror-shine w-1/2" />
+      </div>
 
       {/* Classy Bottom Border Beam */}
       <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/50 to-transparent" />
