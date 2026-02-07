@@ -14,11 +14,12 @@ interface AuthContextType {
 }
 
 export const badges: Badge[] = [
-  { id: '1', name: 'Novice', level: 1, requiredPoints: 0, icon: '🌱', color: 'badge-novice' },
-  { id: '2', name: 'Apprentice', level: 2, requiredPoints: 50, icon: '🔨', color: 'badge-apprentice' },
-  { id: '3', name: 'Journeyman', level: 3, requiredPoints: 150, icon: '⚒️', color: 'badge-journeyman' },
-  { id: '4', name: 'Expert', level: 4, requiredPoints: 300, icon: '⭐', color: 'badge-expert' },
-  { id: '5', name: 'Master', level: 5, requiredPoints: 500, icon: '👑', color: 'badge-master' },
+  { id: '1', name: 'Newbie', level: 1, requiredPoints: 20, icon: '🌱', color: 'badge-newbie' },
+  { id: '2', name: 'Explorer', level: 2, requiredPoints: 40, icon: '🔍', color: 'badge-explorer' },
+  { id: '3', name: 'Achiever', level: 3, requiredPoints: 60, icon: '⭐', color: 'badge-achiever' },
+  { id: '4', name: 'Specialist', level: 4, requiredPoints: 80, icon: '🎯', color: 'badge-specialist' },
+  { id: '5', name: 'Expert', level: 5, requiredPoints: 100, icon: '💎', color: 'badge-expert' },
+  { id: '6', name: 'Master', level: 6, requiredPoints: 120, icon: '👑', color: 'badge-master' },
 ];
 
 const getCurrentBadge = (points: number): Badge => {

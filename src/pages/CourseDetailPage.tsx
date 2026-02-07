@@ -38,6 +38,8 @@ const getLessonIcon = (type: LessonType) => {
   }
 };
 
+import { PaymentModal } from '@/components/courses/PaymentModal';
+
 export default function CourseDetailPage() {
   const { courseId } = useParams();
   const navigate = useNavigate();
@@ -50,11 +52,18 @@ export default function CourseDetailPage() {
   const [reviewComment, setReviewComment] = useState('');
   const [isSubmittingReview, setIsSubmittingReview] = useState(false);
 
+  // Payment State
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [isPurchased, setIsPurchased] = useState(false);
+
   const course = mockCourses.find((c) => c.id === courseId);
   const lessons = mockLessons.filter((l) => l.courseId === courseId);
   const enrollment = mockEnrollments.find(
     (e) => e.courseId === courseId && e.userId === user?.id
   );
+
+  // Check if user has access (either enrolled or just purchased in this session)
+  const hasAccess = enrollment || isPurchased;
 
   if (!course) {
     return (
@@ -73,6 +82,20 @@ export default function CourseDetailPage() {
     // Ideally update local state or re-fetch
     // For now, reload or navigate
     navigate(`/course/${courseId}/learn`);
+  };
+
+  const handlePurchase = () => {
+    if (!isAuthenticated) {
+      navigate(`/login?redirect=/course/${courseId}`);
+      return;
+    }
+    setShowPaymentModal(true);
+  };
+
+  const onPaymentConfirm = () => {
+    setShowPaymentModal(false);
+    setIsPurchased(true);
+    toast.success('Payment successful! You can now start learning.');
   };
 
   const formatDuration = (minutes: number) => {
@@ -133,6 +156,13 @@ export default function CourseDetailPage() {
 
   return (
     <div className="py-8">
+      <PaymentModal
+        isOpen={showPaymentModal}
+        onClose={() => setShowPaymentModal(false)}
+        onConfirm={onPaymentConfirm}
+        price={course.price || 0}
+        courseTitle={course.title}
+      />
       <div className="container">
         {/* Back Button */}
         <div className="mb-6">
@@ -207,19 +237,19 @@ export default function CourseDetailPage() {
               </div>
 
               {/* CTA Button */}
-              {enrollment && (
+              {hasAccess && (
                 <Button className="w-full mt-4" size="sm" asChild>
                   <Link to={`/course/${course.id}/learn`}>
                     <Play className="mr-2 h-4 w-4" />
-                    {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
+                    {enrollment?.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
                   </Link>
                 </Button>
               )}
 
-              {!enrollment && (
+              {!hasAccess && (
                 <>
                   {course.accessRule === 'payment' && course.price ? (
-                    <Button className="w-full mt-4" size="sm">
+                    <Button className="w-full mt-4" size="sm" onClick={handlePurchase}>
                       Buy Now (₹{course.price})
                     </Button>
                   ) : course.accessRule === 'invitation' ? (
@@ -240,6 +270,7 @@ export default function CourseDetailPage() {
             </div>
           </div>
         </div>
+
 
         {/* Tabs */}
         <Tabs defaultValue="overview" className="mt-12">
