@@ -1,12 +1,13 @@
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { DashboardGreeting } from './DashboardGreeting';
+import { SidebarUser } from './SidebarUser';
 import {
   GraduationCap,
   LayoutDashboard,
-  BookOpen,
-  Users,
-  BarChart3,
-  Settings,
+  BookMarked,
+  UsersRound,
+  PieChart,
+  Settings2,
   ChevronLeft,
   LogOut,
   Menu,
@@ -19,10 +20,10 @@ import { useState } from 'react';
 
 const sidebarLinks = [
   { href: '/backoffice', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/backoffice/courses', label: 'Courses', icon: BookOpen },
-  { href: '/backoffice/learners', label: 'Learners', icon: Users },
-  { href: '/backoffice/reports', label: 'Reports', icon: BarChart3 },
-  { href: '/backoffice/settings', label: 'Settings', icon: Settings },
+  { href: '/backoffice/courses', label: 'Courses', icon: BookMarked },
+  { href: '/backoffice/learners', label: 'Learners', icon: UsersRound },
+  { href: '/backoffice/reports', label: 'Reports', icon: PieChart },
+  { href: '/backoffice/settings', label: 'Settings', icon: Settings2 },
 ];
 
 export function BackofficeLayout() {
@@ -109,31 +110,7 @@ export function BackofficeLayout() {
         </nav>
 
         {/* User Section */}
-        <div className={cn(
-          "border-t border-border p-2",
-          collapsed ? "space-y-2" : ""
-        )}>
-          {!collapsed && (
-            <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full gradient-primary text-sm font-medium text-primary-foreground">
-                {user?.name?.charAt(0).toUpperCase()}
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="truncate text-sm font-medium">{user?.name}</p>
-                <p className="truncate text-xs text-muted-foreground capitalize">{user?.role}</p>
-              </div>
-            </div>
-          )}
-          <Button
-            variant="ghost"
-            size={collapsed ? "icon" : "sm"}
-            className="text-destructive hover:text-destructive w-full"
-            onClick={logout}
-          >
-            <LogOut className="h-4 w-4" />
-            {!collapsed && <span className="ml-2">Logout</span>}
-          </Button>
-        </div>
+        <SidebarUser user={user} collapsed={collapsed} logout={logout} />
       </aside>
 
       {/* Mobile Overlay */}

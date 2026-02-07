@@ -44,7 +44,7 @@ export function DashboardGreeting({ name, className }: DashboardGreetingProps) {
             {/* Avatar Section */}
             <div className="relative">
                 <Avatar className="h-9 w-9 border-2 border-background ring-2 ring-primary/10 transition-all duration-300 group-hover:ring-primary/30">
-                    <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`} />
+                    <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${name}&backgroundColor=transparent`} />
                     <AvatarFallback className="bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold text-xs">
                         {name.charAt(0).toUpperCase()}
                     </AvatarFallback>

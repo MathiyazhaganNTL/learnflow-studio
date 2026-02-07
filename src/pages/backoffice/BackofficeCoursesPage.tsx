@@ -367,7 +367,7 @@ export default function BackofficeCoursesPage() {
                     className={cn(
                       "capitalize font-medium",
                       course.status === 'published'
-                        ? 'bg-success/20 text-success border-success/30'
+                        ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/20 hover:bg-emerald-500/25'
                         : 'bg-muted text-muted-foreground border-muted-foreground/30'
                     )}
                   >
@@ -398,7 +398,7 @@ export default function BackofficeCoursesPage() {
                     className={cn(
                       "capitalize",
                       course.status === 'published'
-                        ? 'bg-success/10 text-success border-success/30 backdrop-blur-sm'
+                        ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/20 backdrop-blur-sm'
                         : 'bg-muted/80 text-muted-foreground backdrop-blur-sm'
                     )}
                   >
