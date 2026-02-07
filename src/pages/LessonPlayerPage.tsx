@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   Play,
   FileText,
@@ -33,13 +33,18 @@ const getLessonIcon = (type: LessonType) => {
   }
 };
 
+import { GamificationPopup } from '@/components/gamification/GamificationPopup';
+
 export default function LessonPlayerPage() {
   const { courseId } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, addPoints, currentBadge, nextBadge, progressToNextBadge } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<string[]>(['l1', 'l2']);
+  const [showGamificationPopup, setShowGamificationPopup] = useState(false);
+  const [pointsEarned, setPointsEarned] = useState(0);
 
   const course = useMemo(() => mockCourses.find((c) => c.id === courseId), [courseId]);
   const lessons = useMemo(() => mockLessons.filter((l) => l.courseId === courseId), [courseId]);
@@ -95,6 +100,15 @@ export default function LessonPlayerPage() {
       setCurrentLessonIndex(currentLessonIndex + 1);
       window.scrollTo(0, 0); // Scroll to top
     }
+  };
+
+  const handleCompleteCourse = () => {
+    markComplete();
+    // Award points (mock amount)
+    const points = 50;
+    addPoints(points);
+    setPointsEarned(points);
+    setShowGamificationPopup(true);
   };
 
   const goToPrevious = () => {
@@ -174,6 +188,18 @@ export default function LessonPlayerPage() {
 
   return (
     <div className="flex min-h-screen bg-background">
+      <GamificationPopup
+        isOpen={showGamificationPopup}
+        onClose={() => {
+          setShowGamificationPopup(false);
+          navigate('/my-courses');
+        }}
+        pointsEarned={pointsEarned}
+        currentBadge={currentBadge}
+        nextBadge={nextBadge}
+        progress={progressToNextBadge}
+      />
+
       {/* Sidebar */}
       <aside
         className={cn(
@@ -342,16 +368,17 @@ export default function LessonPlayerPage() {
             <ChevronLeft className="mr-2 h-4 w-4" />
             Previous
           </Button>
-          <Button onClick={goToNext}>
-            {currentLessonIndex === lessons.length - 1 ? (
-              'Complete Course'
-            ) : (
-              <>
-                Next
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </>
-            )}
-          </Button>
+          {currentLessonIndex === lessons.length - 1 ? (
+            <Button onClick={handleCompleteCourse} className="bg-success hover:bg-success/90">
+              Complete Course
+              <CheckCircle className="ml-2 h-4 w-4" />
+            </Button>
+          ) : (
+            <Button onClick={goToNext}>
+              Next
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          )}
         </footer>
       </main>
     </div>
