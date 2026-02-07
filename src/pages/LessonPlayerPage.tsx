@@ -197,6 +197,20 @@ export default function LessonPlayerPage() {
 
   return (
     <div className="flex min-h-screen bg-background relative">
+      <GamificationPopup
+        isOpen={showGamificationPopup}
+        onClose={() => {
+          setShowGamificationPopup(false);
+          // Navigate to my-courses after closing
+          navigate('/my-courses');
+        }}
+        pointsEarned={pointsEarned}
+        currentBadge={currentBadge}
+        nextBadge={nextBadge}
+        progress={progressToNextBadge}
+        title="Course Completed!"
+        buttonText="Back to My Courses"
+      />
       {/* Sidebar */}
       <aside
         className={cn(
@@ -366,13 +380,14 @@ export default function LessonPlayerPage() {
             Previous
           </Button>
           <Button
-            onClick={currentLessonIndex === lessons.length - 1 ? handleCompleteCourse : goToNext}
+            onClick={currentLessonIndex === lessons.length - 1 ? markComplete : goToNext}
             disabled={courseCompleted}
-            className={currentLessonIndex === lessons.length - 1 ? "bg-success hover:bg-success/90" : ""}
+            className={currentLessonIndex === lessons.length - 1 ? "" : ""}
+            variant={currentLessonIndex === lessons.length - 1 ? "secondary" : "default"}
           >
             {currentLessonIndex === lessons.length - 1 ? (
               <>
-                Complete Course
+                Finish Lesson
                 <CheckCircle className="ml-2 h-4 w-4" />
               </>
             ) : (
@@ -396,15 +411,7 @@ export default function LessonPlayerPage() {
         }
 
         {/* Success confirmation (optional) */}
-        {
-          courseCompleted && (
-            <div className="fixed bottom-6 right-6 z-50">
-              <Button size="lg" className="bg-success pointer-events-none">
-                Course Completed!
-              </Button>
-            </div>
-          )
-        }
+
       </main >
     </div >
   );

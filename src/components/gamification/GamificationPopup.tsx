@@ -28,7 +28,9 @@ export function GamificationPopup({
     currentBadge,
     nextBadge,
     progress,
-}: GamificationPopupProps) {
+    title = "Congratulations!",
+    buttonText = "Awesome!",
+}: GamificationPopupProps & { title?: string; buttonText?: string }) {
 
     useEffect(() => {
         if (isOpen) {
@@ -65,7 +67,7 @@ export function GamificationPopup({
                         <Trophy className="h-10 w-10 text-yellow-600" />
                     </div>
                     <DialogTitle className="text-2xl font-bold text-center">
-                        Congratulations!
+                        {title}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -93,7 +95,7 @@ export function GamificationPopup({
 
                 <DialogFooter className="sm:justify-center">
                     <Button onClick={onClose} size="lg" className="w-full sm:w-auto">
-                        Awesome!
+                        {buttonText}
                     </Button>
                 </DialogFooter>
             </DialogContent>
