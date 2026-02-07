@@ -64,11 +64,17 @@ export default function RegisterPage() {
 
                     {/* Logo */}
                     <div className="mb-8">
-                        <div className="flex items-center gap-2">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-primary">
-                                <GraduationCap className="h-6 w-6 text-primary-foreground" />
+                        <div className="flex items-center gap-3 group cursor-pointer">
+                            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-white/5 shadow-xl transition-all group-hover:bg-white/10">
+                                <img
+                                    src="/logo.png"
+                                    alt="LearnSphere Logo"
+                                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_10px_rgba(113,75,110,0.5)]"
+                                />
                             </div>
-                            <span className="text-xl font-bold">LearnSphere</span>
+                            <span className="font-display text-2xl font-extrabold tracking-tight text-foreground transition-colors group-hover:text-primary">
+                                LearnSphere
+                            </span>
                         </div>
                     </div>
 

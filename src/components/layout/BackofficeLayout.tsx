@@ -51,12 +51,18 @@ export function BackofficeLayout() {
           "flex h-16 items-center border-b border-border px-4",
           collapsed ? "justify-center" : "justify-between"
         )}>
-          <Link to="/backoffice" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">
-              <GraduationCap className="h-5 w-5 text-primary-foreground" />
+          <Link to="/backoffice" className="flex items-center gap-3 group">
+            <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-white/5 transition-all group-hover:bg-white/10">
+              <img
+                src="/logo.png"
+                alt="LearnSphere Logo"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110 drop-shadow-[0_0_8px_rgba(113,75,110,0.5)]"
+              />
             </div>
             {!collapsed && (
-              <span className="font-display text-lg font-bold">LearnSphere</span>
+              <span className="font-display text-lg font-extrabold tracking-tight text-foreground transition-colors group-hover:text-primary">
+                LearnSphere
+              </span>
             )}
           </Link>
           {!collapsed && (
@@ -117,7 +123,7 @@ export function BackofficeLayout() {
               </div>
             </div>
           )}
-            <Button
+          <Button
             variant="ghost"
             size={collapsed ? "icon" : "sm"}
             className="text-destructive hover:text-destructive w-full"

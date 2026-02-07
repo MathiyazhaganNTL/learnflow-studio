@@ -24,15 +24,37 @@ export function LearnerNavbar() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
+    <header className="sticky top-0 z-50 w-full">
+      {/* Mirror/Glassmorphism Base Layer */}
+      <div className="absolute inset-0 bg-background/60 backdrop-blur-2xl supports-[backdrop-filter]:bg-background/40" />
 
-      <div className="container flex h-16 items-center justify-between">
+      {/* Glossy Reflective Shine Effect */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent pointer-events-none opacity-50" />
+
+      {/* Classy Bottom Border Beam */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+
+      {/* Ultra-subtle inner glow */}
+      <div className="absolute inset-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)] pointer-events-none" />
+
+      <div className="container relative z-10 flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to={isAuthenticated ? "/my-courses" : "/"} className="flex items-center gap-2 font-display text-xl font-bold text-foreground">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg gradient-primary">
-            <GraduationCap className="h-5 w-5 text-primary-foreground" />
+        <Link
+          to={isAuthenticated ? "/my-courses" : "/"}
+          className="flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-95 group"
+        >
+          <div className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white/5 shadow-2xl transition-all group-hover:bg-white/10 group-hover:shadow-primary/20">
+            <img
+              src="/logo.png"
+              alt="LearnSphere Logo"
+              className="h-full w-full object-cover mix-blend-normal transition-all duration-500 group-hover:scale-110 drop-shadow-[0_0_12px_rgba(113,75,110,0.6)]"
+            />
+            {/* Subtle glow orb behind logo */}
+            <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <span>LearnSphere</span>
+          <span className="font-display text-2xl font-extrabold tracking-tight text-foreground transition-colors group-hover:text-primary">
+            LearnSphere
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

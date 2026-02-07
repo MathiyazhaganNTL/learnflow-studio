@@ -12,7 +12,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section - Full screen height */}
-      <section className="relative overflow-hidden min-h-screen flex items-center py-7 md:py-12 px-4 md:px-12">
+      <section className="relative overflow-hidden min-h-[85vh] flex items-center py-6 md:py-10 px-4 md:px-12">
         {/* Premium Dark Gradient Background */}
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
 
@@ -59,6 +59,25 @@ export default function HomePage() {
               Over 50,000 active learners
             </div>
 
+            {/* Brand Logo & Name */}
+            <div
+              className="mb-8 flex items-center gap-4 animate-fade-in"
+              style={{ animationDelay: '0.1s' }}
+            >
+              <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl bg-white/5 shadow-2xl backdrop-blur-sm border border-white/10">
+                <img
+                  src="/logo.png"
+                  alt="LearnSphere Logo"
+                  className="h-full w-full object-cover drop-shadow-[0_0_20px_rgba(113,75,110,1)]"
+                />
+                <div className="absolute inset-0 bg-primary/10 blur-2xl" />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-[0.2em] text-accent uppercase">Educational Platform</span>
+                <span className="text-3xl font-black tracking-tighter text-white">LearnSphere</span>
+              </div>
+            </div>
+
             {/* Main Heading - Reduced sizes */}
             <h1
               className="mb-5 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl animate-fade-in text-white leading-[1.2]"
@@ -68,12 +87,7 @@ export default function HomePage() {
               }}
             >
               Master New Skills <br />
-              With{' '}
-              <span
-                className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient block mt-1"
-              >
-                LearnSphere
-              </span>
+              With Global Experts
             </h1>
 
             {/* Subtext - Reduced sizes */}
@@ -119,15 +133,17 @@ export default function HomePage() {
         </div>
       </section >
 
-      {/* Features Section */}
-      <section className="relative py-7 md:py-12 overflow-hidden">
+      <section className="relative py-6 md:py-10 overflow-hidden border-b border-border/10">
         {/* Colorful floating background */}
         <FloatingBlobs />
 
-        <div className="container relative z-10">
-          <div className="text-left mb-8">
-            <h2 className="text-3xl font-bold mb-4 md:text-4xl text-primary">Why Choose LearnSphere?</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
+        {/* Section Border Beam */}
+        <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+
+        <div className="container-max relative z-10">
+          <div className="text-left mb-6">
+            <h2 className="text-3xl font-bold mb-3 md:text-4xl text-primary drop-shadow-[0_0_15px_rgba(113,75,110,0.3)]">Why Choose LearnSphere?</h2>
+            <p className="text-muted-foreground max-w-2xl text-base leading-relaxed">
               Join thousands of learners who have transformed their careers through our platform.
             </p>
           </div>
@@ -139,12 +155,12 @@ export default function HomePage() {
                 className="h-full shadow-lg border-primary/10"
               >
                 <div className="flex flex-col gap-4">
-                  <div className="rounded-2xl bg-primary/10 p-4 w-fit">
-                    <GraduationCap className="h-8 w-8 text-primary" />
+                  <div className="rounded-2xl bg-primary/10 p-4 w-fit group-hover:bg-primary/20 transition-colors duration-500 shadow-[0_0_15px_rgba(113,75,110,0.1)] group-hover:shadow-[0_0_25px_rgba(113,75,110,0.3)]">
+                    <GraduationCap className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-3">Expert Instructors</h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Expert Instructors</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       Learn from industry professionals with real-world experience and proven track records.
                     </p>
                   </div>
@@ -158,12 +174,12 @@ export default function HomePage() {
                 className="h-full shadow-lg border-accent/10"
               >
                 <div className="flex flex-col gap-4">
-                  <div className="rounded-2xl bg-accent/10 p-4 w-fit">
-                    <Play className="h-8 w-8 text-accent" />
+                  <div className="rounded-2xl bg-accent/10 p-4 w-fit group-hover:bg-accent/20 transition-colors duration-500 shadow-[0_0_15px_rgba(13,143,220,0.1)] group-hover:shadow-[0_0_25px_rgba(13,143,220,0.3)]">
+                    <Play className="h-8 w-8 text-accent group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-3">High-Quality Content</h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-accent transition-colors">High-Quality Content</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       Access professionally produced videos, interactive quizzes, and comprehensive materials.
                     </p>
                   </div>
@@ -177,12 +193,12 @@ export default function HomePage() {
                 className="h-full shadow-lg border-primary/10"
               >
                 <div className="flex flex-col gap-4">
-                  <div className="rounded-2xl bg-primary/10 p-4 w-fit">
-                    <Award className="h-8 w-8 text-primary" />
+                  <div className="rounded-2xl bg-primary/10 p-4 w-fit group-hover:bg-primary/20 transition-colors duration-500 shadow-[0_0_15px_rgba(113,75,110,0.1)] group-hover:shadow-[0_0_25px_rgba(113,75,110,0.3)]">
+                    <Award className="h-8 w-8 text-primary group-hover:scale-110 transition-transform duration-500" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold mb-3">Earn Certificates</h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Earn Certificates</h3>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
                       Get recognized for your achievements with certificates and badges you can share.
                     </p>
                   </div>
@@ -193,15 +209,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="relative py-7 md:py-12 bg-muted/30 overflow-hidden">
+      <section className="relative py-6 md:py-10 bg-muted/20 overflow-hidden border-b border-border/10">
         {/* Background glow for this section too */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-accent/5 blur-[150px] pointer-events-none" />
 
-        <div className="container relative z-10">
-          <div className="text-left mb-8">
-            <h2 className="text-3xl font-bold mb-4 md:text-4xl text-primary">How It Works</h2>
-            <p className="text-muted-foreground max-w-2xl text-lg leading-relaxed">
+        {/* Section Glowing Line */}
+        <div className="absolute inset-x-40 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-accent/40 to-transparent animate-pulse" />
+
+        <div className="container-max relative z-10">
+          <div className="text-left mb-6">
+            <h2 className="text-3xl font-bold mb-3 md:text-4xl text-primary drop-shadow-[0_0_15px_rgba(113,75,110,0.3)]">How It Works</h2>
+            <p className="text-muted-foreground max-w-2xl text-base leading-relaxed">
               Start your learning journey in just three simple steps.
             </p>
           </div>
@@ -248,8 +266,21 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-7 md:py-12 overflow-hidden border-t">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 animate-pulse-glow" />
+      <section className="relative py-12 md:py-20 overflow-hidden border-t border-border/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-accent/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 animate-pulse-glow" />
+
+        {/* High-end Running Line for CTA */}
+        <div className="absolute top-0 left-0 w-full h-[2px] overflow-hidden">
+          <div className="w-full h-full bg-gradient-to-r from-transparent via-primary to-accent animate-border-beam"
+            style={{
+              // @ts-ignore
+              '--duration': '5s',
+              offsetPath: 'rect(0 100% 0 0)',
+              width: '30%'
+            }}
+          />
+        </div>
 
         <div className="container relative z-10">
           <div className="text-left max-w-3xl">
