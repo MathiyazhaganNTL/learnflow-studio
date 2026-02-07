@@ -167,7 +167,11 @@ export function LightRays({
             const bloom = ctx.createRadialGradient(
                 centerX, originY + height * 0.2,
                 0,
+<<<<<<< Updated upstream
                 centerX, originY + height * 0.3,
+=======
+                centerX, height * 0.3,
+>>>>>>> Stashed changes
                 spotlightWidth * 0.6
             );
 
@@ -190,7 +194,11 @@ export function LightRays({
             }
         };
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     }, [raysOrigin, raysColor, lightSpread, rayLength, fadeDistance, saturation, followMouse, mouseInfluence, intensity, mousePos]);
+=======
+    }, [raysColor, lightSpread, rayLength, fadeDistance, saturation, followMouse, mouseInfluence, intensity, mousePos]);
+>>>>>>> Stashed changes
 =======
     }, [raysColor, lightSpread, rayLength, fadeDistance, saturation, followMouse, mouseInfluence, intensity, mousePos]);
 >>>>>>> Stashed changes
