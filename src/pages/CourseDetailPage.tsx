@@ -87,21 +87,35 @@ export default function CourseDetailPage() {
     <div className="py-8">
       <div className="container">
         {/* Course Header */}
-        <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_400px]">
+        <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_350px]">
           {/* Left - Info */}
           <div>
-            <div className="mb-4 flex flex-wrap gap-2">
+            {/* Course Cover Image */}
+            <div className="mb-6 rounded-xl overflow-hidden">
+              <img
+                src={course.image}
+                alt={course.title}
+                className="h-64 w-full object-cover"
+              />
+            </div>
+            
+            {/* Course Title */}
+            <h1 className="mb-4 text-3xl font-bold lg:text-4xl">{course.title}</h1>
+            
+            {/* Short Description */}
+            <p className="mb-6 text-lg text-muted-foreground">{course.description}</p>
+
+            {/* Tags and Stats */}
+            <div className="mb-6 flex flex-wrap gap-2">
               {course.tags.map((tag) => (
                 <Badge key={tag} variant="secondary">
                   {tag}
                 </Badge>
               ))}
             </div>
-            <h1 className="mb-4 text-3xl font-bold lg:text-4xl">{course.title}</h1>
-            <p className="mb-6 text-lg text-muted-foreground">{course.description}</p>
 
-            {/* Stats */}
-            <div className="mb-6 flex flex-wrap items-center gap-6 text-sm">
+            {/* Additional Course Info */}
+            <div className="flex flex-wrap items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 fill-warning text-warning" />
                 <span className="font-semibold">{course.rating.toFixed(1)}</span>
@@ -112,17 +126,13 @@ export default function CourseDetailPage() {
                 {course.enrolledCount.toLocaleString()} enrolled
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
-                <BookOpen className="h-5 w-5" />
-                {course.totalLessons} lessons
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
                 <Clock className="h-5 w-5" />
                 {formatDuration(course.totalDuration)}
               </div>
             </div>
 
             {/* Instructor */}
-            <div className="flex items-center gap-3">
+            <div className="mt-6 flex items-center gap-3">
               <Avatar className="h-10 w-10">
                 <AvatarFallback className="gradient-primary text-primary-foreground">
                   {course.instructorName.charAt(0)}
@@ -135,158 +145,102 @@ export default function CourseDetailPage() {
             </div>
           </div>
 
-          {/* Right - Card */}
-          <div className="lg:sticky lg:top-24">
-            <div className="overflow-hidden rounded-xl border border-border bg-card shadow-lg">
-              <div className="aspect-video">
-                <img
-                  src={course.image}
-                  alt={course.title}
-                  className="h-full w-full object-cover"
-                />
+          {/* Right - Progress and Stats */}
+          <div className="lg:sticky lg:top-24 space-y-4">
+            {/* Progress Section */}
+            {enrollment && (
+              <div className="rounded-xl border border-border bg-card p-6">
+                <div className="text-center mb-4">
+                  <p className="text-3xl font-bold">{enrollment.progress}%</p>
+                  <p className="text-sm text-muted-foreground">Completed</p>
+                </div>
+                <Progress value={enrollment.progress} className="h-2 mb-4" />
+                <Button className="w-full" size="sm" asChild>
+                  <Link to={`/course/${course.id}/learn`}>
+                    <Play className="mr-2 h-4 w-4" />
+                    {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
+                  </Link>
+                </Button>
               </div>
-              <div className="p-6">
-                {enrollment ? (
-                  <>
-                    <div className="mb-4">
-                      <div className="mb-2 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Your Progress</span>
-                        <span className="font-medium">{enrollment.progress}%</span>
-                      </div>
-                      <Progress value={enrollment.progress} className="h-2" />
-                    </div>
-                    <Button className="w-full" size="lg" asChild>
-                      <Link to={`/course/${course.id}/learn`}>
-                        <Play className="mr-2 h-5 w-5" />
-                        {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
-                      </Link>
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    {course.accessRule === 'payment' && course.price ? (
-                      <>
-                        <div className="mb-4 text-center">
-                          <span className="text-3xl font-bold">₹{course.price}</span>
-                        </div>
-                        <Button className="w-full" size="lg">
-                          Buy Now
-                        </Button>
-                      </>
-                    ) : course.accessRule === 'invitation' ? (
-                      <Button className="w-full" size="lg" variant="outline" disabled>
-                        <Lock className="mr-2 h-5 w-5" />
-                        Invitation Only
-                      </Button>
-                    ) : isAuthenticated ? (
-                      <Button className="w-full" size="lg">
-                        Enroll Now - Free
-                      </Button>
-                    ) : (
-                      <Button className="w-full" size="lg" asChild>
-                        <Link to="/login">Sign In to Enroll</Link>
-                      </Button>
-                    )}
-                  </>
-                )}
+            )}
+
+            {/* Statistics Cards */}
+            <div className="space-y-3">
+              <div className="rounded-lg border border-border bg-card p-4">
+                <p className="text-xs text-muted-foreground">Total Content</p>
+                <p className="mt-1 text-2xl font-bold">{lessons.length}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-4">
+                <p className="text-xs text-muted-foreground">Completed</p>
+                <p className="mt-1 text-2xl font-bold">{completedLessonsCount}</p>
+              </div>
+              <div className="rounded-lg border border-border bg-card p-4">
+                <p className="text-xs text-muted-foreground">Remaining</p>
+                <p className="mt-1 text-2xl font-bold">{incompleteLessonsCount}</p>
               </div>
             </div>
+
+            {!enrollment && (
+              <>
+                {course.accessRule === 'payment' && course.price ? (
+                  <>
+                    <div className="rounded-xl border border-border bg-card p-6 text-center">
+                      <span className="text-3xl font-bold">${course.price}</span>
+                      <Button className="w-full mt-4" size="lg">
+                        Buy Now
+                      </Button>
+                    </div>
+                  </>
+                ) : course.accessRule === 'invitation' ? (
+                  <Button className="w-full" size="lg" variant="outline" disabled>
+                    <Lock className="mr-2 h-5 w-5" />
+                    Invitation Only
+                  </Button>
+                ) : isAuthenticated ? (
+                  <Button className="w-full" size="lg">
+                    Enroll Now - Free
+                  </Button>
+                ) : (
+                  <Button className="w-full" size="lg" asChild>
+                    <Link to="/login">Sign In to Enroll</Link>
+                  </Button>
+                )}
+              </>
+            )}
           </div>
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="overview">
+        <Tabs defaultValue="overview" className="mt-12">
           <TabsList className="mb-6">
             <TabsTrigger value="overview">Course Overview</TabsTrigger>
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="reviews">Reviews ({reviews.length})</TabsTrigger>
+            <TabsTrigger value="reviews">Ratings and Reviews ({reviews.length})</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview">
-            <div className="space-y-8">
-              {/* Course Info Section */}
-              <div className="rounded-xl border border-border bg-card overflow-hidden">
-                <div className="aspect-video w-full">
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    className="h-full w-full object-cover"
+            <div className="space-y-6">
+              {/* Content Header */}
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">{lessons.length} Contents</h3>
+                <div className="relative w-full max-w-xs">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search content"
+                    value={searchLesson}
+                    onChange={(e) => setSearchLesson(e.target.value)}
+                    className="w-full rounded-lg border border-input bg-background pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
                   />
                 </div>
-                <div className="p-6">
-                  <h2 className="mb-3 text-2xl font-bold">{course.title}</h2>
-                  <p className="mb-6 text-muted-foreground">{course.description}</p>
-                </div>
               </div>
 
-              {/* Progress Section */}
-              {enrollment && (
-                <div className="rounded-xl border border-border bg-card p-6">
-                  <h3 className="mb-4 font-semibold">Your Progress</h3>
-                  <div className="space-y-3">
-                    <div>
-                      <div className="mb-2 flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Completion</span>
-                        <span className="font-medium">{enrollment.progress}%</span>
-                      </div>
-                      <Progress value={enrollment.progress} className="h-2" />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Statistics Section */}
-              <div className="grid gap-4 sm:grid-cols-3">
-                <div className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Total Lessons</p>
-                      <p className="mt-2 text-2xl font-bold">{lessons.length}</p>
-                    </div>
-                    <BookOpen className="h-8 w-8 text-muted-foreground opacity-50" />
-                  </div>
-                </div>
-                <div className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Completed</p>
-                      <p className="mt-2 text-2xl font-bold">{completedLessonsCount}</p>
-                    </div>
-                    <CheckCircle className="h-8 w-8 text-success opacity-50" />
-                  </div>
-                </div>
-                <div className="rounded-xl border border-border bg-card p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-muted-foreground">Remaining</p>
-                      <p className="mt-2 text-2xl font-bold">{incompleteLessonsCount}</p>
-                    </div>
-                    <BookOpen className="h-8 w-8 text-muted-foreground opacity-50" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Lessons List Section */}
-              <div className="rounded-xl border border-border bg-card">
-                {/* Search */}
-                <div className="border-b border-border p-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder="Search lessons..."
-                      value={searchLesson}
-                      onChange={(e) => setSearchLesson(e.target.value)}
-                      className="w-full rounded-lg border border-input bg-background pl-10 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-                    />
-                  </div>
-                </div>
-
-                {/* Lesson List */}
-                <div className="divide-y divide-border">
-                  {filteredLessons.map((lesson, index) => {
+              {/* Lessons List */}
+              <div className="rounded-xl border border-border bg-card divide-y divide-border">
+                {filteredLessons.length > 0 ? (
+                  filteredLessons.map((lesson, index) => {
                     const Icon = getLessonIcon(lesson.type);
                     const isCompleted = index < completedLessonsCount;
+                    const isInProgress = !isCompleted && index === completedLessonsCount;
                     const isLocked = !enrollment && !isCompleted;
 
                     return (
@@ -295,95 +249,51 @@ export default function CourseDetailPage() {
                         onClick={() => !isLocked && handleLessonClick(lesson)}
                         disabled={isLocked}
                         className={cn(
-                          "flex w-full items-center gap-4 p-4 transition-colors text-left",
+                          "flex w-full items-center justify-between gap-4 p-4 transition-colors text-left",
                           isLocked ? "opacity-60 cursor-not-allowed" : "hover:bg-muted/50 cursor-pointer"
                         )}
                       >
-                        <div className={cn(
-                          "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg",
-                          isCompleted ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"
-                        )}>
-                          {isCompleted ? (
-                            <CheckCircle className="h-5 w-5" />
-                          ) : (
-                            <Icon className="h-5 w-5" />
-                          )}
-                        </div>
-                        <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                          <div className={cn(
+                            "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded full",
+                            isCompleted ? "bg-success/10 text-success" : isInProgress ? "border-2 border-primary text-primary" : "bg-muted text-muted-foreground"
+                          )}>
+                            {isCompleted ? (
+                              <CheckCircle className="h-5 w-5" />
+                            ) : isInProgress ? (
+                              <div className="h-3 w-3 rounded-full bg-primary" />
+                            ) : (
+                              <div className="h-3 w-3 rounded-full border-2 border-current" />
+                            )}
+                          </div>
                           <p className={cn(
                             "font-medium truncate",
                             isCompleted && "text-muted-foreground"
                           )}>
                             {lesson.title}
                           </p>
-                          <p className="text-sm text-muted-foreground capitalize">
-                            {lesson.type} • {lesson.duration} min
-                          </p>
                         </div>
-                        {isLocked ? (
-                          <Lock className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                        )}
+                        <div className="flex items-center gap-2 flex-shrink-0">
+                          <span className="text-xs text-muted-foreground">{lesson.duration}m</span>
+                          {isLocked ? (
+                            <Lock className="h-4 w-4 text-muted-foreground" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                          )}
+                        </div>
                       </button>
                     );
-                  })}
-                </div>
+                  })
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-center">
+                    <Search className="mb-3 h-8 w-8 text-muted-foreground opacity-50" />
+                    <p className="text-muted-foreground">No content found</p>
+                  </div>
+                )}
               </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="content">
-            <div className="rounded-xl border border-border bg-card">
-              {/* Lesson List */}
-              <div className="divide-y divide-border">
-                {filteredLessons.map((lesson, index) => {
-                  const Icon = getLessonIcon(lesson.type);
-                  const isCompleted = index < completedLessonsCount;
-                  const isLocked = !enrollment && !isCompleted;
-
-                  return (
-                    <button
-                      key={lesson.id}
-                      onClick={() => !isLocked && handleLessonClick(lesson)}
-                      disabled={isLocked}
-                      className={cn(
-                        "flex w-full items-center gap-4 p-4 transition-colors text-left",
-                        isLocked ? "opacity-60 cursor-not-allowed" : "hover:bg-muted/50 cursor-pointer"
-                      )}
-                    >
-                      <div className={cn(
-                        "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg",
-                        isCompleted ? "bg-success/10 text-success" : "bg-muted text-muted-foreground"
-                      )}>
-                        {isCompleted ? (
-                          <CheckCircle className="h-5 w-5" />
-                        ) : (
-                          <Icon className="h-5 w-5" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className={cn(
-                          "font-medium truncate",
-                          isCompleted && "text-muted-foreground"
-                        )}>
-                          {lesson.title}
-                        </p>
-                        <p className="text-sm text-muted-foreground capitalize">
-                          {lesson.type} • {lesson.duration} min
-                        </p>
-                      </div>
-                      {isLocked ? (
-                        <Lock className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                      ) : (
-                        <ChevronRight className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </TabsContent>
           <TabsContent value="reviews">
             <div className="space-y-6">
               {/* Rating Summary */}
@@ -411,40 +321,47 @@ export default function CourseDetailPage() {
 
               {/* Reviews List */}
               <div className="space-y-4">
-                {reviews.map((review) => (
-                  <div key={review.id} className="rounded-xl border border-border bg-card p-6">
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <Avatar>
-                          <AvatarImage src={review.userAvatar} />
-                          <AvatarFallback className="gradient-primary text-primary-foreground">
-                            {review.userName.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium">{review.userName}</p>
-                          <p className="text-sm text-muted-foreground">
-                            {new Date(review.createdAt).toLocaleDateString()}
-                          </p>
+                {reviews.length > 0 ? (
+                  reviews.map((review) => (
+                    <div key={review.id} className="rounded-xl border border-border bg-card p-6">
+                      <div className="mb-4 flex items-start justify-between">
+                        <div className="flex items-center gap-3">
+                          <Avatar>
+                            <AvatarImage src={review.userAvatar} />
+                            <AvatarFallback className="gradient-primary text-primary-foreground">
+                              {review.userName.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium">{review.userName}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {new Date(review.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={cn(
+                                "h-4 w-4",
+                                star <= review.rating
+                                  ? "fill-warning text-warning"
+                                  : "text-muted"
+                              )}
+                            />
+                          ))}
                         </div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className={cn(
-                              "h-4 w-4",
-                              star <= review.rating
-                                ? "fill-warning text-warning"
-                                : "text-muted"
-                            )}
-                          />
-                        ))}
-                      </div>
+                      <p className="text-muted-foreground">{review.comment}</p>
                     </div>
-                    <p className="text-muted-foreground">{review.comment}</p>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-center rounded-xl border border-border bg-card">
+                    <Star className="mb-3 h-8 w-8 text-muted-foreground opacity-50" />
+                    <p className="text-muted-foreground">No reviews yet</p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </TabsContent>
