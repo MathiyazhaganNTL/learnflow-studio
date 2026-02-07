@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import {
   Play,
@@ -41,11 +41,12 @@ export default function LessonPlayerPage() {
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [completedLessons, setCompletedLessons] = useState<string[]>(['l1', 'l2']);
 
-  const course = mockCourses.find((c) => c.id === courseId);
-  const lessons = mockLessons.filter((l) => l.courseId === courseId);
-  const enrollment = mockEnrollments.find(
+  const course = useMemo(() => mockCourses.find((c) => c.id === courseId), [courseId]);
+  const lessons = useMemo(() => mockLessons.filter((l) => l.courseId === courseId), [courseId]);
+  const enrollment = useMemo(() => mockEnrollments.find(
     (e) => e.courseId === courseId && e.userId === user?.id
-  );
+  ), [courseId, user?.id]);
+
 
   // Handle navigation to specific lesson from CourseDetailPage
   useEffect(() => {
@@ -54,9 +55,13 @@ export default function LessonPlayerPage() {
       const index = lessons.findIndex((l) => l.id === lessonId);
       if (index !== -1) {
         setCurrentLessonIndex(index);
+        // On mobile, close sidebar when navigating to a specific lesson
+        if (window.innerWidth < 1024) {
+          setSidebarOpen(false);
+        }
       }
     }
-  }, [lessons]);
+  }, [location.state, lessons]); // Added location.state to dependencies
 
   const currentLesson = lessons[currentLessonIndex];
 
@@ -65,6 +70,9 @@ export default function LessonPlayerPage() {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <h1 className="mb-4 text-2xl font-bold">Content not found</h1>
+          <p className="mb-4 text-muted-foreground">
+            {lessons.length === 0 ? "This course has no content yet." : "Lesson not found."}
+          </p>
           <Button asChild>
             <Link to="/courses">Back to Courses</Link>
           </Button>
@@ -85,20 +93,34 @@ export default function LessonPlayerPage() {
     markComplete();
     if (currentLessonIndex < lessons.length - 1) {
       setCurrentLessonIndex(currentLessonIndex + 1);
+      window.scrollTo(0, 0); // Scroll to top
     }
   };
 
   const goToPrevious = () => {
     if (currentLessonIndex > 0) {
       setCurrentLessonIndex(currentLessonIndex - 1);
+      window.scrollTo(0, 0); // Scroll to top
     }
   };
 
+  const handleLessonSelect = (index: number) => {
+    setCurrentLessonIndex(index);
+    // Close sidebar on mobile when selection is made
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+    window.scrollTo(0, 0);
+  };
+
   const renderContent = () => {
+    // Add key to force re-render when lesson changes
+    const contentKey = currentLesson.id;
+
     switch (currentLesson.type) {
       case 'video':
         return (
-          <div className="aspect-video w-full overflow-hidden rounded-lg bg-black">
+          <div key={contentKey} className="aspect-video w-full overflow-hidden rounded-lg bg-black">
             <iframe
               src={currentLesson.content.videoUrl}
               className="h-full w-full"
@@ -109,7 +131,7 @@ export default function LessonPlayerPage() {
         );
       case 'document':
         return (
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 py-20">
+          <div key={contentKey} className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 py-20">
             <FileText className="mb-4 h-16 w-16 text-muted-foreground" />
             <p className="mb-2 text-lg font-medium">{currentLesson.content.documentName}</p>
             {currentLesson.content.allowDownload && (
@@ -122,7 +144,7 @@ export default function LessonPlayerPage() {
         );
       case 'image':
         return (
-          <div className="overflow-hidden rounded-lg">
+          <div key={contentKey} className="overflow-hidden rounded-lg">
             <img
               src={currentLesson.content.imageUrl}
               alt={currentLesson.title}
@@ -132,7 +154,7 @@ export default function LessonPlayerPage() {
         );
       case 'quiz':
         return (
-          <div className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-20">
+          <div key={contentKey} className="flex flex-col items-center justify-center rounded-lg border border-border bg-card py-20">
             <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-full gradient-primary">
               <HelpCircle className="h-10 w-10 text-primary-foreground" />
             </div>
@@ -203,7 +225,7 @@ export default function LessonPlayerPage() {
             return (
               <button
                 key={lesson.id}
-                onClick={() => setCurrentLessonIndex(index)}
+                onClick={() => handleLessonSelect(index)}
                 className={cn(
                   "flex w-full items-center gap-3 border-b border-border p-4 text-left transition-colors",
                   isCurrent && "bg-primary/5",
