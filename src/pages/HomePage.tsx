@@ -24,8 +24,6 @@ export default function HomePage() {
           }}
         />
 
-<<<<<<< HEAD
-=======
         {/* Premium Spotlight Effect */}
         <LightRays
           raysOrigin="top-center"
@@ -38,8 +36,6 @@ export default function HomePage() {
           intensity={0.4}
           blur={80}
         />
-
->>>>>>> 0ed306960fccfab070e5f8d3a6cd635b086e4f7d
         {/* Subtle noise texture for premium feel */}
         <div
           className="absolute inset-0 opacity-[0.015]"
@@ -48,16 +44,6 @@ export default function HomePage() {
           }}
         />
 
-        {/* Adjusted Spotlight Effect */}
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#7c3aed"
-          lightSpread={0.5}
-          rayLength={0.7}
-          saturation={0.3}
-          intensity={0.25}
-          className="opacity-40"
-        />
 
         {/* Floating background elements */}
         {/* Removed the floating blob div as per instruction */}
@@ -75,11 +61,7 @@ export default function HomePage() {
 
             {/* Main Heading - Reduced sizes */}
             <h1
-<<<<<<< HEAD
               className="mb-5 text-4xl font-extrabold tracking-tight md:text-5xl lg:text-6xl animate-fade-in text-white leading-[1.2]"
-=======
-              className="mb-6 text-4xl font-bold tracking-tight md:text-6xl lg:text-7xl animate-fade-in text-white"
->>>>>>> 0ed306960fccfab070e5f8d3a6cd635b086e4f7d
               style={{
                 animationDelay: '0.2s',
                 textShadow: '0 2px 20px rgba(0,0,0,0.5)'
@@ -102,14 +84,9 @@ export default function HomePage() {
                 textShadow: '0 1px 10px rgba(0,0,0,0.4)'
               }}
             >
-<<<<<<< HEAD
               Learn from industry titans at your own pace.
               Earn recognized badges and transform your career
               with interactive, hands-on courses.
-=======
-              Discover courses taught by industry experts. Learn at your own pace,
-              earn badges, and transform your career with hands-on learning.
->>>>>>> 0ed306960fccfab070e5f8d3a6cd635b086e4f7d
             </p>
 
             {/* Buttons - More compact */}
@@ -229,11 +206,7 @@ export default function HomePage() {
             </p>
           </div>
 
-<<<<<<< HEAD
           <div className="grid gap-5 md:grid-cols-3">
-=======
-          <div className="grid gap-8 md:grid-cols-3">
->>>>>>> 0ed306960fccfab070e5f8d3a6cd635b086e4f7d
             {[
               {
                 step: '01',
@@ -275,7 +248,6 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-<<<<<<< HEAD
       <section className="relative py-7 md:py-12 overflow-hidden border-t">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 animate-pulse-glow" />
 
@@ -285,15 +257,6 @@ export default function HomePage() {
             <p className="mb-10 text-xl text-muted-foreground leading-relaxed">
               Join thousands of learners and start your journey today.
               Unlock your potential with LearnSphere's expert-led curriculum.
-=======
-      <section className="border-t border-border bg-gradient-to-r from-primary/5 to-accent/5 py-20">
-        <div className="container">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="mb-4 text-3xl font-bold">Ready to Start Learning?</h2>
-            <p className="mb-8 text-muted-foreground">
-              Join thousands of learners and start your journey today.
-              It's free to get started.
->>>>>>> 0ed306960fccfab070e5f8d3a6cd635b086e4f7d
             </p>
             <div className="flex flex-col items-start justify-start gap-6 sm:flex-row">
               <Button size="lg" className="h-14 px-10 text-lg font-semibold shadow-xl hover:scale-105 transition-transform" asChild>
