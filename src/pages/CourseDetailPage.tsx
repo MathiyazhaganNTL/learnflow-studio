@@ -14,7 +14,9 @@ import {
   HelpCircle,
   Search,
   Download,
-  ExternalLink
+  Download,
+  ExternalLink,
+  ArrowLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -86,6 +88,16 @@ export default function CourseDetailPage() {
   return (
     <div className="py-8">
       <div className="container">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Button variant="ghost" className="gap-2 pl-0 hover:bg-transparent hover:text-primary" asChild>
+            <Link to="/my-courses">
+              <ArrowLeft className="h-4 w-4" />
+              Back to My Courses
+            </Link>
+          </Button>
+        </div>
+
         {/* Course Header */}
         <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_400px]">
           {/* Left - Info */}
