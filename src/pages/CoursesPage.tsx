@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Filter, Grid, List } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 const allTags = ['All', 'React', 'JavaScript', 'TypeScript', 'Design', 'Node.js', 'Python'];
 
 export default function CoursesPage() {
+  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [search, setSearch] = useState('');
   const [selectedTag, setSelectedTag] = useState('All');
@@ -20,16 +21,16 @@ export default function CoursesPage() {
   const filteredCourses = mockCourses.filter((course) => {
     // Only show published courses
     if (course.status !== 'published') return false;
-    
+
     // Check visibility
     if (course.visibility === 'signed_in' && !isAuthenticated) return false;
-    
+
     // Search filter
     if (search && !course.title.toLowerCase().includes(search.toLowerCase())) return false;
-    
+
     // Tag filter
     if (selectedTag !== 'All' && !course.tags.includes(selectedTag)) return false;
-    
+
     return true;
   });
 
@@ -94,12 +95,22 @@ export default function CoursesPage() {
         {filteredCourses.length > 0 ? (
           <div className={cn(
             "grid gap-6",
-            viewMode === 'grid' 
-              ? "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" 
+            viewMode === 'grid'
+              ? "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
               : "grid-cols-1"
           )}>
             {filteredCourses.map((course) => (
-              <CourseCard key={course.id} course={course} />
+              <CourseCard
+                key={course.id}
+                course={course}
+                onAction={() => {
+                  if (isAuthenticated) {
+                    navigate(`/course/${course.id}`);
+                  } else {
+                    navigate(`/login?redirect=/course/${course.id}`);
+                  }
+                }}
+              />
             ))}
           </div>
         ) : (

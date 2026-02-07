@@ -14,11 +14,17 @@ import {
   HelpCircle,
   Search,
   Download,
+<<<<<<< HEAD
+  ExternalLink,
+  ChevronLeft
+=======
   Download,
   ExternalLink,
   ArrowLeft
+>>>>>>> 83200f3bfc5540e6a88b90b0aa91527fffb4b24b
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -62,6 +68,14 @@ export default function CourseDetailPage() {
     );
   }
 
+  const handleEnroll = () => {
+    // Mock enrollment logic
+    toast.success('Successfully enrolled in the course!');
+    // Ideally update local state or re-fetch
+    // For now, reload or navigate
+    navigate(`/course/${courseId}/learn`);
+  };
+
   const formatDuration = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -90,11 +104,19 @@ export default function CourseDetailPage() {
       <div className="container">
         {/* Back Button */}
         <div className="mb-6">
+          <Button variant="ghost" size="sm" onClick={() => navigate(-1)} className="gap-2 pl-0 hover:bg-transparent hover:text-primary">
+            <ChevronLeft className="h-4 w-4" />
+            Back
+=======
+<<<<<<< HEAD
+        {/* Back Button */}
+        <div className="mb-6">
           <Button variant="ghost" className="gap-2 pl-0 hover:bg-transparent hover:text-primary" asChild>
             <Link to="/my-courses">
               <ArrowLeft className="h-4 w-4" />
               Back to My Courses
             </Link>
+>>>>>>> 83200f3bfc5540e6a88b90b0aa91527fffb4b24b
           </Button>
         </div>
 
@@ -129,6 +151,52 @@ export default function CourseDetailPage() {
                   className="h-40 w-full object-cover"
                 />
               </div>
+<<<<<<< HEAD
+              <div className="p-6">
+                {enrollment ? (
+                  <>
+                    <div className="mb-4">
+                      <div className="mb-2 flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">Your Progress</span>
+                        <span className="font-medium">{enrollment.progress}%</span>
+                      </div>
+                      <Progress value={enrollment.progress} className="h-2" />
+                    </div>
+                    <Button className="w-full" size="lg" asChild>
+                      <Link to={`/course/${course.id}/learn`}>
+                        <Play className="mr-2 h-5 w-5" />
+                        {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
+                      </Link>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {course.accessRule === 'payment' && course.price ? (
+                      <>
+                        <div className="mb-4 text-center">
+                          <span className="text-3xl font-bold">₹{course.price}</span>
+                        </div>
+                        <Button className="w-full" size="lg">
+                          Buy Now
+                        </Button>
+                      </>
+                    ) : course.accessRule === 'invitation' ? (
+                      <Button className="w-full" size="lg" variant="outline" disabled>
+                        <Lock className="mr-2 h-5 w-5" />
+                        Invitation Only
+                      </Button>
+                    ) : isAuthenticated ? (
+                      <Button className="w-full" size="lg" onClick={handleEnroll}>
+                        Enroll Now - Free
+                      </Button>
+                    ) : (
+                      <Button className="w-full" size="lg" asChild>
+                        <Link to={`/login?redirect=/course/${courseId}`}>Sign In to Enroll</Link>
+                      </Button>
+                    )}
+                  </>
+                )}
+=======
             </div>
 
             {/* Right - Progress and Stats */}
@@ -137,6 +205,7 @@ export default function CourseDetailPage() {
               <div className="mb-4 text-center">
                 <p className="text-2xl font-bold">{enrollment?.progress || 0}%</p>
                 <p className="text-xs text-muted-foreground">Completed</p>
+>>>>>>> 83200f3bfc5540e6a88b90b0aa91527fffb4b24b
               </div>
 
               {/* Progress Bar */}
