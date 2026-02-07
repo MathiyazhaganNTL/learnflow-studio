@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { 
-  ChevronLeft, 
-  Save, 
-  Eye, 
+import {
+  ChevronLeft,
+  Save,
+  Eye,
   Users,
   Mail,
   Upload,
@@ -27,6 +27,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -56,6 +58,11 @@ export default function CourseEditorPage() {
   const [visibility, setVisibility] = useState<string>(course?.visibility || 'everyone');
   const [accessRule, setAccessRule] = useState<string>(course?.accessRule || 'open');
   const [price, setPrice] = useState(course?.price?.toString() || '');
+  const [website, setWebsite] = useState(course?.website || '');
+  const [responsibleId, setResponsibleId] = useState(course?.instructorId || '');
+  const [addAttendeeOpen, setAddAttendeeOpen] = useState(false);
+  const [contactAttendeeOpen, setContactAttendeeOpen] = useState(false);
+
   const [lessonDialogOpen, setLessonDialogOpen] = useState(false);
   const [newLessonTitle, setNewLessonTitle] = useState('');
   const [newLessonType, setNewLessonType] = useState<LessonType>('video');
@@ -99,11 +106,11 @@ export default function CourseEditorPage() {
               Preview
             </Link>
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => setAddAttendeeOpen(true)}>
             <Users className="mr-2 h-4 w-4" />
             Add Attendees
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => setContactAttendeeOpen(true)}>
             <Mail className="mr-2 h-4 w-4" />
             Contact
           </Button>
@@ -138,7 +145,7 @@ export default function CourseEditorPage() {
         </div>
         <div className="flex-1 space-y-4">
           <div>
-            <Label htmlFor="title">Course Title</Label>
+            <Label htmlFor="title">Course Title <span className="text-destructive">*</span></Label>
             <Input
               id="title"
               value={title}
@@ -147,6 +154,33 @@ export default function CourseEditorPage() {
               className="mt-1"
             />
           </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div>
+              <Label htmlFor="website">Website {isPublished && <span className="text-destructive">*</span>}</Label>
+              <Input
+                id="website"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                placeholder="https://example.com"
+                className={cn("mt-1", isPublished && !website && "border-destructive")}
+              />
+            </div>
+            <div>
+              <Label>Responsible</Label>
+              <Select value={responsibleId} onValueChange={setResponsibleId}>
+                <SelectTrigger className="mt-1">
+                  <SelectValue placeholder="Select course admin..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="inst-1">Sarah Johnson</SelectItem>
+                  <SelectItem value="inst-2">Michael Chen</SelectItem>
+                  <SelectItem value="inst-3">Emily Rodriguez</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
           <div>
             <Label htmlFor="tags">Tags</Label>
             <div className="mt-1 flex flex-wrap gap-2">
@@ -352,19 +386,7 @@ export default function CourseEditorPage() {
                 </div>
               )}
 
-              <div>
-                <Label>Course Admin</Label>
-                <Select defaultValue={course.instructorId}>
-                  <SelectTrigger className="mt-2">
-                    <SelectValue placeholder="Select admin..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="inst-1">Sarah Johnson</SelectItem>
-                    <SelectItem value="inst-2">Michael Chen</SelectItem>
-                    <SelectItem value="inst-3">Emily Rodriguez</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+
             </div>
           </div>
         </TabsContent>
@@ -401,6 +423,52 @@ export default function CourseEditorPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Add Attendee Wizard */}
+      <Dialog open={addAttendeeOpen} onOpenChange={setAddAttendeeOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add Attendee</DialogTitle>
+            <DialogDescription>
+              Add a new learner to this course directly by email.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Label htmlFor="learner-email">Learner Email</Label>
+            <Input id="learner-email" placeholder="learner@example.com" className="mt-2" />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAddAttendeeOpen(false)}>Cancel</Button>
+            <Button onClick={() => setAddAttendeeOpen(false)}>Add Learner</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Contact Wizard */}
+      <Dialog open={contactAttendeeOpen} onOpenChange={setContactAttendeeOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Contact Attendees</DialogTitle>
+            <DialogDescription>
+              Send an email to all learners enrolled in this course.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div>
+              <Label htmlFor="subject">Subject</Label>
+              <Input id="subject" placeholder="Course Update..." className="mt-2" />
+            </div>
+            <div>
+              <Label htmlFor="message">Message</Label>
+              <Textarea id="message" placeholder="Type your message here..." className="mt-2 min-h-[100px]" />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setContactAttendeeOpen(false)}>Cancel</Button>
+            <Button onClick={() => setContactAttendeeOpen(false)}>Send Message</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
