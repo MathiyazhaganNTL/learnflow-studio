@@ -36,7 +36,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
     if (!enrollment) {
       if (course.accessRule === 'payment' && course.price) {
         return (
-          <Button className="w-full" onClick={isAuthenticated ? onAction : () => navigate('/login')}>
+          <Button className="w-full rounded-full" onClick={isAuthenticated ? onAction : () => navigate('/login')}>
             Buy ₹{course.price}
           </Button>
         );
@@ -50,7 +50,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
         );
       }
       return (
-        <Button className="w-full" onClick={isAuthenticated ? onAction : () => navigate('/login')}>
+        <Button className="w-full rounded-full" onClick={isAuthenticated ? onAction : () => navigate('/login')}>
           Join Course
         </Button>
       );
@@ -89,11 +89,11 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
   };
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:shadow-card-hover">
+    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       {/* Clickable Area for Image and Title */}
       <div className="cursor-pointer" onClick={handleCardClick}>
         {/* Image */}
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative aspect-video overflow-hidden after:absolute after:inset-0 after:bg-gradient-to-t after:from-black/30 after:to-transparent after:opacity-0 group-hover:after:opacity-100 after:transition-opacity">
           <img
             src={course.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=450&fit=crop'}
             alt={course.title}
@@ -117,7 +117,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
         </div>
 
         {/* Content Preview */}
-        <div className="flex flex-1 flex-col p-4 pb-0">
+        <div className="flex flex-1 flex-col p-5 pb-0">
           {/* Tags */}
           <div className="mb-2 flex flex-wrap gap-1">
             {course.tags.slice(0, 3).map((tag) => (
@@ -128,7 +128,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
           </div>
 
           {/* Title & Description */}
-          <h3 className="mb-2 line-clamp-2 text-lg font-semibold leading-tight">
+          <h3 className="mb-2 line-clamp-2 text-lg font-semibold leading-snug transition-colors group-hover:text-primary">
             {course.title}
           </h3>
           <p className="mb-4 line-clamp-2 flex-1 text-sm text-muted-foreground">
@@ -136,7 +136,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
           </p>
 
           {/* Stats */}
-          <div className="mb-4 flex items-center gap-4 text-sm text-muted-foreground">
+          <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
             <span className="flex items-center gap-1">
               <BookOpen className="h-4 w-4" />
               {course.totalLessons} lessons
@@ -154,7 +154,7 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
       </div>
 
       {/* Content Wrapper for remaining non-clickable actions if needed, though here we just put the button in p-4 */}
-      <div className="flex flex-1 flex-col p-4 pt-0">
+      <div className="flex flex-1 flex-col p-5 pt-0">
         {/* Progress */}
         {showProgress && enrollment && (
           <div className="mb-4">
@@ -162,13 +162,13 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
               <span className="text-muted-foreground">Progress</span>
               <span className="font-medium">{enrollment.progress}%</span>
             </div>
-            <Progress value={enrollment.progress} className="h-2" />
+            <Progress value={enrollment.progress} className="h-2 rounded-full" />
           </div>
         )}
 
         {/* Instructor */}
         <div className="mb-4 flex items-center gap-2 text-sm">
-          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-medium text-primary">
+          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
             {course.instructorName.charAt(0)}
           </div>
           <span className="text-muted-foreground">{course.instructorName}</span>
