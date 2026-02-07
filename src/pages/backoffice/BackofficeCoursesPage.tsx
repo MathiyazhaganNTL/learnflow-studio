@@ -441,6 +441,10 @@ export default function BackofficeCoursesPage() {
                     <Clock className="h-4 w-4" />
                     {formatDuration(course.totalDuration)}
                   </span>
+                  <span className="flex items-center gap-1">
+                    <Users className="h-4 w-4" />
+                    {course.enrolledCount} enrolled
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <Button variant="outline" size="sm" asChild>

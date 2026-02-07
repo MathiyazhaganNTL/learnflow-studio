@@ -260,17 +260,7 @@ export const mockEnrollments: Enrollment[] = [
     enrolledAt: '2024-02-05T14:00:00Z',
     timeSpent: 0,
   },
-  {
-    id: 'e3',
-    userId: '1',
-    courseId: '3',
-    status: 'completed',
-    progress: 100,
-    enrolledAt: '2024-01-10T08:00:00Z',
-    startedAt: '2024-01-10T10:00:00Z',
-    completedAt: '2024-01-30T16:00:00Z',
-    timeSpent: 580,
-  },
+
 ];
 
 export const mockReviews: Review[] = [
