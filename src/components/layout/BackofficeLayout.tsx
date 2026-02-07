@@ -51,7 +51,16 @@ export function BackofficeLayout() {
           "flex h-16 items-center border-b border-border px-4",
           collapsed ? "justify-center" : "justify-between"
         )}>
-          <Link to="/backoffice" className="flex items-center gap-3 group">
+          <Link
+            to="/backoffice"
+            className="flex items-center gap-3 group"
+            onClick={(e) => {
+              if (collapsed) {
+                e.preventDefault();
+                setCollapsed(false);
+              }
+            }}
+          >
             <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-white/5 transition-all group-hover:bg-white/10">
               <img
                 src="/logo.png"
@@ -103,16 +112,7 @@ export function BackofficeLayout() {
           "border-t border-border p-2",
           collapsed ? "space-y-2" : ""
         )}>
-          {collapsed ? (
-            <Button
-              variant="ghost"
-              size="icon"
-              className="w-full"
-              onClick={() => setCollapsed(false)}
-            >
-              <Menu className="h-4 w-4" />
-            </Button>
-          ) : (
+          {!collapsed && (
             <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-full gradient-primary text-sm font-medium text-primary-foreground">
                 {user?.name?.charAt(0).toUpperCase()}
@@ -158,7 +158,7 @@ export function BackofficeLayout() {
           >
             <Menu className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => navigate(-1)} title="Go Back">
+          <Button variant="ghost" size="icon" onClick={() => navigate('/')} title="Go to Site">
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="flex-1" />

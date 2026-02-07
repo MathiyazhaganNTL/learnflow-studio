@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { StatCard } from '@/components/ui/stat-card';
 
 // Mock user enrollment data matching prototype
 const mockUserData = [
@@ -228,40 +229,36 @@ export default function BackofficeDashboard() {
       </div>
 
       {/* Overview Section */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2">
-            <span className="inline-block w-1 h-5 bg-primary rounded-full"></span>
-            Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {stats.map((stat) => {
-              const Icon = stat.icon;
-              return (
-                <div
-                  key={stat.title}
-                  className="flex flex-col items-center justify-center rounded-xl border border-border bg-card p-6 text-center transition-all hover:shadow-md hover:border-primary/30"
-                >
-                  <div
-                    className={cn(
-                      'flex h-14 w-14 items-center justify-center rounded-full mb-3',
-                      stat.bgColor
-                    )}
-                  >
-                    <Icon className={cn('h-7 w-7', stat.color)} />
-                  </div>
-                  <p className="text-3xl font-bold">{stat.value}</p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {stat.title}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          title="Total Participants"
+          value={totalParticipants}
+          icon={Users}
+          variant="purple"
+          description="Active learners"
+        />
+        <StatCard
+          title="Yet to Start"
+          value={yetToStart}
+          icon={Clock}
+          variant="orange"
+          description="Pending enrollment"
+        />
+        <StatCard
+          title="In Progress"
+          value={inProgress}
+          icon={PlayCircle}
+          variant="blue"
+          description="Learning now"
+        />
+        <StatCard
+          title="Completed"
+          value={completed}
+          icon={CheckCircle}
+          variant="green"
+          description="Courses finished"
+        />
+      </div>
 
       {/* Users Table Section */}
       <Card>
