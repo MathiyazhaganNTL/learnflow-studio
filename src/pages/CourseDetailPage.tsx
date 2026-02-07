@@ -88,7 +88,6 @@ export default function CourseDetailPage() {
   return (
     <div className="py-8">
       <div className="container">
-<<<<<<< HEAD
         {/* Back Button */}
         <div className="mb-6">
           <Button variant="ghost" className="gap-2 pl-0 hover:bg-transparent hover:text-primary" asChild>
@@ -99,40 +98,6 @@ export default function CourseDetailPage() {
           </Button>
         </div>
 
-        {/* Course Header */}
-        <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_400px]">
-          {/* Left - Info */}
-          <div>
-            <div className="mb-4 flex flex-wrap gap-2">
-              {course.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-            <h1 className="mb-4 text-3xl font-bold lg:text-4xl">{course.title}</h1>
-            <p className="mb-6 text-lg text-muted-foreground">{course.description}</p>
-
-            {/* Stats */}
-            <div className="mb-6 flex flex-wrap items-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 fill-warning text-warning" />
-                <span className="font-semibold">{course.rating.toFixed(1)}</span>
-                <span className="text-muted-foreground">({course.reviewsCount} reviews)</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Users className="h-5 w-5" />
-                {course.enrolledCount.toLocaleString()} enrolled
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <BookOpen className="h-5 w-5" />
-                {course.totalLessons} lessons
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="h-5 w-5" />
-                {formatDuration(course.totalDuration)}
-              </div>
-=======
         {/* Course Overview Section - Horizontal Layout */}
         <div className="mb-8 rounded-xl border border-border bg-card overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr_320px]">
@@ -143,17 +108,16 @@ export default function CourseDetailPage() {
                 alt={course.title}
                 className="h-full w-full object-cover min-h-40"
               />
->>>>>>> 820846bcb1ca0359ba55ca5e32650fe7d7938e04
             </div>
 
             {/* Middle - Course Info */}
             <div className="p-6 flex flex-col justify-between">
               {/* Course Label */}
               <Badge className="w-fit mb-2">Course</Badge>
-              
+
               {/* Course Title */}
               <h1 className="text-2xl font-bold mb-3">{course.title}</h1>
-              
+
               {/* Short Description */}
               <p className="text-sm text-muted-foreground line-clamp-2">{course.description}</p>
 
@@ -273,7 +237,7 @@ export default function CourseDetailPage() {
                         <div className="flex items-center gap-4 flex-1 min-w-0">
                           {/* Lesson Number */}
                           <span className="text-sm font-semibold text-muted-foreground"># {index + 1}</span>
-                          
+
                           {/* Lesson Title */}
                           <p className={cn(
                             "text-sm font-medium",
