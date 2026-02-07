@@ -21,6 +21,7 @@ import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import NotFound from "@/pages/NotFound";
 import LearnerSettingsPage from "@/pages/SettingsPage";
+import BadgesPage from "@/pages/BadgesPage";
 
 // Backoffice Pages
 import BackofficeDashboard from "@/pages/backoffice/BackofficeDashboard";
@@ -75,6 +76,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <MyCoursesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/badges"
+          element={
+            <ProtectedRoute>
+              <BadgesPage />
             </ProtectedRoute>
           }
         />

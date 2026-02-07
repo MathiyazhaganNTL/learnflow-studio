@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { GraduationCap, BookOpen, LayoutDashboard, Menu, X, User, LogOut, Settings, ArrowLeft } from 'lucide-react';
+import { GraduationCap, BookOpen, LayoutDashboard, Menu, X, User, LogOut, Settings, ArrowLeft, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -132,6 +132,18 @@ export function LearnerNavbar() {
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link
+                      to="/badges"
+                      className={cn(
+                        "w-full cursor-pointer",
+                        isActive('/badges') ? "bg-primary/10 text-primary" : "text-muted-foreground"
+                      )}
+                    >
+                      <Award className="mr-2 h-4 w-4" />
+                      My Badges
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
                       to="/settings"
                       className={cn(
                         "w-full cursor-pointer",
@@ -199,6 +211,19 @@ export function LearnerNavbar() {
               >
                 <GraduationCap className="h-4 w-4" />
                 My Courses
+              </Link>
+            )}
+            {isAuthenticated && (
+              <Link
+                to="/badges"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                  isActive('/badges') ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted"
+                )}
+              >
+                <Award className="h-4 w-4" />
+                My Badges
               </Link>
             )}
             <div className="my-2 h-px bg-border" />

@@ -26,7 +26,7 @@ export default function LoginPage() {
       if (redirect) {
         navigate(redirect);
       } else {
-        navigate(selectedRole === 'learner' ? '/my-courses' : '/backoffice');
+        navigate(selectedRole === 'learner' ? '/courses' : '/backoffice');
       }
     } catch (error) {
       console.error('Login failed:', error);
