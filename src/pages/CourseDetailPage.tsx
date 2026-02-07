@@ -86,127 +86,96 @@ export default function CourseDetailPage() {
   return (
     <div className="py-8">
       <div className="container">
-        {/* Course Header */}
-        <div className="mb-8 grid gap-8 lg:grid-cols-[1fr_350px]">
-          {/* Left - Info */}
-          <div>
-            {/* Course Cover Image */}
-            <div className="mb-6 rounded-xl overflow-hidden">
+        {/* Course Overview Section - Horizontal Layout */}
+        <div className="mb-8 rounded-xl border border-border bg-card overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr_320px]">
+            {/* Left - Course Cover */}
+            <div className="hidden lg:block">
               <img
                 src={course.image}
                 alt={course.title}
-                className="h-64 w-full object-cover"
+                className="h-full w-full object-cover min-h-40"
               />
             </div>
-            
-            {/* Course Title */}
-            <h1 className="mb-4 text-3xl font-bold lg:text-4xl">{course.title}</h1>
-            
-            {/* Short Description */}
-            <p className="mb-6 text-lg text-muted-foreground">{course.description}</p>
 
-            {/* Tags and Stats */}
-            <div className="mb-6 flex flex-wrap gap-2">
-              {course.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
+            {/* Middle - Course Info */}
+            <div className="p-6 flex flex-col justify-between">
+              {/* Course Label */}
+              <Badge className="w-fit mb-2">Course</Badge>
+              
+              {/* Course Title */}
+              <h1 className="text-2xl font-bold mb-3">{course.title}</h1>
+              
+              {/* Short Description */}
+              <p className="text-sm text-muted-foreground line-clamp-2">{course.description}</p>
 
-            {/* Additional Course Info */}
-            <div className="flex flex-wrap items-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <Star className="h-5 w-5 fill-warning text-warning" />
-                <span className="font-semibold">{course.rating.toFixed(1)}</span>
-                <span className="text-muted-foreground">({course.reviewsCount} reviews)</span>
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Users className="h-5 w-5" />
-                {course.enrolledCount.toLocaleString()} enrolled
-              </div>
-              <div className="flex items-center gap-2 text-muted-foreground">
-                <Clock className="h-5 w-5" />
-                {formatDuration(course.totalDuration)}
+              {/* Mobile Course Image */}
+              <div className="lg:hidden mt-4 rounded-lg overflow-hidden">
+                <img
+                  src={course.image}
+                  alt={course.title}
+                  className="h-40 w-full object-cover"
+                />
               </div>
             </div>
 
-            {/* Instructor */}
-            <div className="mt-6 flex items-center gap-3">
-              <Avatar className="h-10 w-10">
-                <AvatarFallback className="gradient-primary text-primary-foreground">
-                  {course.instructorName.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="text-sm text-muted-foreground">Created by</p>
-                <p className="font-medium">{course.instructorName}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Right - Progress and Stats */}
-          <div className="lg:sticky lg:top-24 space-y-4">
-            {/* Progress Section */}
-            {enrollment && (
-              <div className="rounded-xl border border-border bg-card p-6">
-                <div className="text-center mb-4">
-                  <p className="text-3xl font-bold">{enrollment.progress}%</p>
-                  <p className="text-sm text-muted-foreground">Completed</p>
-                </div>
-                <Progress value={enrollment.progress} className="h-2 mb-4" />
-                <Button className="w-full" size="sm" asChild>
-                  <Link to={`/course/${course.id}/learn`}>
-                    <Play className="mr-2 h-4 w-4" />
-                    {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
-                  </Link>
-                </Button>
-              </div>
-            )}
-
-            {/* Statistics Cards */}
-            <div className="space-y-3">
-              <div className="rounded-lg border border-border bg-card p-4">
-                <p className="text-xs text-muted-foreground">Total Content</p>
-                <p className="mt-1 text-2xl font-bold">{lessons.length}</p>
-              </div>
-              <div className="rounded-lg border border-border bg-card p-4">
+            {/* Right - Progress and Stats */}
+            <div className="p-6 border-l border-border">
+              {/* Progress Percentage */}
+              <div className="mb-4 text-center">
+                <p className="text-2xl font-bold">{enrollment?.progress || 0}%</p>
                 <p className="text-xs text-muted-foreground">Completed</p>
-                <p className="mt-1 text-2xl font-bold">{completedLessonsCount}</p>
               </div>
-              <div className="rounded-lg border border-border bg-card p-4">
-                <p className="text-xs text-muted-foreground">Remaining</p>
-                <p className="mt-1 text-2xl font-bold">{incompleteLessonsCount}</p>
-              </div>
-            </div>
 
-            {!enrollment && (
-              <>
-                {course.accessRule === 'payment' && course.price ? (
-                  <>
-                    <div className="rounded-xl border border-border bg-card p-6 text-center">
-                      <span className="text-3xl font-bold">${course.price}</span>
-                      <Button className="w-full mt-4" size="lg">
-                        Buy Now
-                      </Button>
-                    </div>
-                  </>
-                ) : course.accessRule === 'invitation' ? (
-                  <Button className="w-full" size="lg" variant="outline" disabled>
-                    <Lock className="mr-2 h-5 w-5" />
-                    Invitation Only
-                  </Button>
-                ) : isAuthenticated ? (
-                  <Button className="w-full" size="lg">
-                    Enroll Now - Free
-                  </Button>
-                ) : (
-                  <Button className="w-full" size="lg" asChild>
-                    <Link to="/login">Sign In to Enroll</Link>
-                  </Button>
-                )}
-              </>
-            )}
+              {/* Progress Bar */}
+              <Progress value={enrollment?.progress || 0} className="mb-6 h-2" />
+
+              {/* Stat Cards - Horizontal Row */}
+              <div className="grid grid-cols-3 gap-2">
+                <div className="border border-border rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">Content</p>
+                  <p className="text-lg font-bold mt-1">{lessons.length}</p>
+                </div>
+                <div className="border border-border rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">Completed</p>
+                  <p className="text-lg font-bold mt-1">{completedLessonsCount}</p>
+                </div>
+                <div className="border border-border rounded-lg p-3 text-center">
+                  <p className="text-xs text-muted-foreground">Incomplete</p>
+                  <p className="text-lg font-bold mt-1">{incompleteLessonsCount}</p>
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              {enrollment && (
+                <Button className="w-full mt-4" size="sm" disabled>
+                  <Play className="mr-2 h-4 w-4" />
+                  {enrollment.status === 'yet_to_start' ? 'Start Learning' : 'Continue Learning'}
+                </Button>
+              )}
+
+              {!enrollment && (
+                <>
+                  {course.accessRule === 'payment' && course.price ? (
+                    <Button className="w-full mt-4" size="sm">
+                      Buy Now (${course.price})
+                    </Button>
+                  ) : course.accessRule === 'invitation' ? (
+                    <Button className="w-full mt-4" size="sm" variant="outline" disabled>
+                      Invitation Only
+                    </Button>
+                  ) : isAuthenticated ? (
+                    <Button className="w-full mt-4" size="sm">
+                      Enroll Now - Free
+                    </Button>
+                  ) : (
+                    <Button className="w-full mt-4" size="sm" asChild>
+                      <Link to="/login">Sign In to Enroll</Link>
+                    </Button>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
 
@@ -219,8 +188,8 @@ export default function CourseDetailPage() {
 
           <TabsContent value="overview">
             <div className="space-y-6">
-              {/* Content Header */}
-              <div className="flex items-center justify-between">
+              {/* Content Header with Search */}
+              <div className="flex items-center justify-between gap-4">
                 <h3 className="text-lg font-semibold">{lessons.length} Contents</h3>
                 <div className="relative w-full max-w-xs">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -249,36 +218,35 @@ export default function CourseDetailPage() {
                         onClick={() => !isLocked && handleLessonClick(lesson)}
                         disabled={isLocked}
                         className={cn(
-                          "flex w-full items-center justify-between gap-4 p-4 transition-colors text-left",
+                          "flex w-full items-center justify-between gap-4 px-6 py-4 transition-colors text-left",
                           isLocked ? "opacity-60 cursor-not-allowed" : "hover:bg-muted/50 cursor-pointer"
                         )}
                       >
                         <div className="flex items-center gap-4 flex-1 min-w-0">
-                          <div className={cn(
-                            "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded full",
-                            isCompleted ? "bg-success/10 text-success" : isInProgress ? "border-2 border-primary text-primary" : "bg-muted text-muted-foreground"
-                          )}>
-                            {isCompleted ? (
-                              <CheckCircle className="h-5 w-5" />
-                            ) : isInProgress ? (
-                              <div className="h-3 w-3 rounded-full bg-primary" />
-                            ) : (
-                              <div className="h-3 w-3 rounded-full border-2 border-current" />
-                            )}
-                          </div>
+                          {/* Lesson Number */}
+                          <span className="text-sm font-semibold text-muted-foreground"># {index + 1}</span>
+                          
+                          {/* Lesson Title */}
                           <p className={cn(
-                            "font-medium truncate",
-                            isCompleted && "text-muted-foreground"
+                            "text-sm font-medium",
+                            isCompleted ? "text-muted-foreground" : "text-primary"
                           )}>
                             {lesson.title}
                           </p>
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          <span className="text-xs text-muted-foreground">{lesson.duration}m</span>
-                          {isLocked ? (
-                            <Lock className="h-4 w-4 text-muted-foreground" />
+
+                        {/* Status Indicator */}
+                        <div className="flex items-center gap-3">
+                          {isCompleted ? (
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full bg-success/10">
+                              <CheckCircle className="h-5 w-5 text-success" />
+                            </div>
+                          ) : isInProgress ? (
+                            <div className="flex h-6 w-6 items-center justify-center rounded-full border-2 border-primary">
+                              <div className="h-2 w-2 rounded-full bg-primary" />
+                            </div>
                           ) : (
-                            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                            <div className="h-6 w-6 rounded-full border-2 border-muted-foreground" />
                           )}
                         </div>
                       </button>
@@ -287,7 +255,7 @@ export default function CourseDetailPage() {
                 ) : (
                   <div className="flex flex-col items-center justify-center py-12 text-center">
                     <Search className="mb-3 h-8 w-8 text-muted-foreground opacity-50" />
-                    <p className="text-muted-foreground">No content found</p>
+                    <p className="text-sm text-muted-foreground">No content found</p>
                   </div>
                 )}
               </div>
