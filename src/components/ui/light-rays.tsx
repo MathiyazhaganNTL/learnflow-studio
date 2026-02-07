@@ -1,25 +1,19 @@
-import React, { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 interface LightRaysProps {
-    raysOrigin?: 'top-center' | 'top-left' | 'top-right';
     raysColor?: string;
-    raysSpeed?: number;
     lightSpread?: number;
     rayLength?: number;
-    pulsating?: boolean;
     fadeDistance?: number;
     saturation?: number;
     followMouse?: boolean;
     mouseInfluence?: number;
-    noiseAmount?: number;
-    distortion?: number;
     intensity?: number;
     blur?: number;
     className?: string;
 }
 
 export function LightRays({
-    raysOrigin = 'top-center',
     raysColor = '#7c3aed',
     lightSpread = 0.6,
     rayLength = 0.8,
@@ -45,7 +39,7 @@ export function LightRays({
         if (!ctx) return;
 
         const resizeCanvas = () => {
-            const dpr = Math.min(window.devicePixelRatio, 1.5); // Limit for performance
+            const dpr = Math.min(window.devicePixelRatio, 1.5);
             canvas.width = canvas.offsetWidth * dpr;
             canvas.height = canvas.offsetHeight * dpr;
             ctx.scale(dpr, dpr);
@@ -206,7 +200,7 @@ export function LightRays({
             className={`absolute inset-0 pointer-events-none ${className}`}
             style={{
                 filter: `blur(${blur}px)`,
-                transform: 'translateZ(0)', // GPU acceleration
+                transform: 'translateZ(0)',
             }}
         >
             <canvas

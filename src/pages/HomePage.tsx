@@ -9,10 +9,52 @@ export default function HomePage() {
   return (
     <div className="flex flex-col">
       {/* Hero Section */}
+<<<<<<< HEAD
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/5 py-20 md:py-32">
         <div className="container relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <div className="mb-6 inline-flex items-center rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-primary">
+=======
+      <section className="relative overflow-hidden min-h-[80vh] flex items-center">
+        {/* Premium Dark Gradient Background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
+
+        {/* Secondary subtle gradient for depth */}
+        <div
+          className="absolute inset-0 opacity-60"
+          style={{
+            background: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%)'
+          }}
+        />
+
+        {/* Premium Spotlight Effect */}
+        <LightRays
+          raysColor="#7c3aed"
+          lightSpread={0.55}
+          rayLength={0.75}
+          saturation={0.35}
+          followMouse
+          mouseInfluence={0.03}
+          intensity={0.4}
+          blur={80}
+        />
+
+        {/* Subtle noise texture for premium feel */}
+        <div
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Content */}
+        <div className="container relative z-10 py-20">
+          <div className="mx-auto max-w-4xl text-center">
+            {/* Badge - Using primary color */}
+            <div
+              className="mb-8 inline-flex items-center rounded-full border border-primary/40 bg-primary/20 backdrop-blur-sm px-5 py-2 text-sm font-semibold text-white shadow-lg animate-fade-in"
+            >
+>>>>>>> 7e93e0c (Add PaymentModal component and fix TypeScript imports)
               <Award className="mr-2 h-4 w-4" />
               Trusted by 50,000+ learners worldwide
             </div>

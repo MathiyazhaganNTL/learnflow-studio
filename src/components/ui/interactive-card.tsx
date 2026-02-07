@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState, type HTMLAttributes, type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-interface InteractiveCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    children: React.ReactNode;
+interface InteractiveCardProps extends HTMLAttributes<HTMLDivElement> {
+    children: ReactNode;
     className?: string;
     glowColor?: string;
 }
