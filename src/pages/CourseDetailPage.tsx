@@ -164,7 +164,6 @@ export default function CourseDetailPage() {
         courseTitle={course.title}
       />
       <div className="container">
-<<<<<<< Updated upstream
         {/* Back Button */}
         <div className="mb-6">
           <Button variant="ghost" className="gap-2 pl-0 hover:bg-transparent hover:text-primary" asChild>
@@ -174,9 +173,6 @@ export default function CourseDetailPage() {
             </Link>
           </Button>
         </div>
-
-=======
->>>>>>> Stashed changes
         {/* Course Overview Section - Horizontal Layout */}
         <div className="mb-8 rounded-xl border border-border bg-card overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr_320px]">
