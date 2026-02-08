@@ -112,13 +112,18 @@ export function CourseCard({ course, enrollment, showProgress = false, onAction 
 
           {/* Rating Badge */}
           {course.status === 'published' && (
-            <div className="absolute left-3 top-3 z-10">
+            <div className="absolute left-3 top-3 z-10 group-hover:scale-105 transition-transform duration-300">
               <div className="relative">
-                <div className="absolute inset-0 bg-yellow-400/30 blur-lg rounded-full" />
-                <Badge className="relative bg-card/95 backdrop-blur-md border-yellow-400/30 shadow-lg">
-                  <Star className="mr-1 h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                  <span className="font-bold">{course.rating.toFixed(1)}</span>
-                </Badge>
+                {/* Enhanced Glow Effect */}
+                <div className="absolute inset-0 -z-10 bg-yellow-500/50 blur-lg rounded-full animate-pulse" />
+
+                {/* Styled Badge */}
+                <div className="flex items-center gap-1.5 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 px-3 py-1 shadow-[0_0_15px_rgba(251,191,36,0.5)] border border-yellow-200/50 backdrop-blur-md">
+                  <Star className="h-3.5 w-3.5 fill-white text-white drop-shadow-sm" />
+                  <span className="text-sm font-extrabold text-white tracking-wide drop-shadow-sm">
+                    {course.rating.toFixed(1)}
+                  </span>
+                </div>
               </div>
             </div>
           )}
