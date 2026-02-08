@@ -1,4 +1,5 @@
 
+import { useNavigate } from 'react-router-dom';
 import { LogOut, Sparkles } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -19,12 +20,17 @@ interface SidebarUserProps {
 }
 
 export function SidebarUser({ user, collapsed, logout }: SidebarUserProps) {
+    const navigate = useNavigate();
+
     if (collapsed) {
         return (
             <div className="flex flex-col items-center gap-4 border-t border-border p-4 animate-in fade-in duration-300">
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <div className="group relative cursor-pointer">
+                        <div
+                            className="group relative cursor-pointer"
+                            onClick={() => navigate('/settings')}
+                        >
                             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-violet-500 to-fuchsia-500 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             <Avatar className="relative h-9 w-9 border border-border transition-transform duration-300 group-hover:scale-110">
                                 <AvatarImage src={`https://api.dicebear.com/9.x/notionists/svg?seed=${user?.name}&backgroundColor=transparent`} />
@@ -59,7 +65,10 @@ export function SidebarUser({ user, collapsed, logout }: SidebarUserProps) {
     return (
         <div className="border-t border-border p-4 space-y-4 animate-in slide-in-from-bottom-2 duration-500">
             {/* Profile Card */}
-            <div className="group relative overflow-hidden rounded-xl border border-primary/10 bg-gradient-to-br from-card/50 to-transparent p-3 shadow-sm transition-all duration-300 hover:bg-card/80 hover:shadow-md hover:border-primary/20">
+            <div
+                onClick={() => navigate('/settings')}
+                className="group relative overflow-hidden rounded-xl border border-primary/10 bg-gradient-to-br from-card/50 to-transparent p-3 shadow-sm transition-all duration-300 hover:bg-card/80 hover:shadow-md hover:border-primary/20 cursor-pointer"
+            >
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
                 <div className="relative flex items-center gap-3">

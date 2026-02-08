@@ -1,4 +1,5 @@
-import { Award, Star, Medal, Trophy, Moon, Zap, Target, Crown } from 'lucide-react';
+
+import { Award, Star, Medal, Trophy, Moon, Zap, Target, Crown, Sun } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 type UserStats = {
@@ -64,7 +65,6 @@ const BADGES = [
     condition: (stats: UserStats) => stats.coursesCompleted >= 1,
   },
   {
-<<<<<<< HEAD
     id: "five-courses",
     name: "Course Explorer",
     description: "Started 5 different courses",
@@ -72,66 +72,87 @@ const BADGES = [
     color: "from-pink-400 to-rose-500",
     glowColor: "pink",
     condition: (stats: UserStats) => stats.coursesStarted >= 5,
-=======
-    id: "fast-learner",
-    name: "⚡ Fast Learner",
-    description: "Completed a lesson quickly",
-    condition: (stats: UserStats) => stats.coursesStarted >= 1,
   },
   {
     id: "daily-grinder",
     name: " Daily Grinder",
     description: "Learned something every day for 3 days",
+    icon: Zap,
+    color: "from-orange-400 to-red-500",
+    glowColor: "orange",
     condition: (stats: UserStats) => stats.streak >= 3,
   },
   {
     id: "knowledge-seeker",
     name: " Knowledge Seeker",
     description: "Started 3 different courses",
+    icon: Target,
+    color: "from-blue-400 to-indigo-500",
+    glowColor: "blue",
     condition: (stats: UserStats) => stats.coursesStarted >= 3,
   },
   {
     id: "halfway-hero",
     name: " Halfway Hero",
     description: "Reached 50% in any course",
+    icon: Award,
+    color: "from-teal-400 to-emerald-500",
+    glowColor: "teal",
     condition: (stats: UserStats) => stats.coursesCompleted >= 1,
   },
   {
     id: "streak-master",
     name: " Streak Master",
     description: "Maintained a 14-day streak",
+    icon: Crown,
+    color: "from-violet-400 to-purple-600",
+    glowColor: "violet",
     condition: (stats: UserStats) => stats.streak >= 14,
   },
   {
     id: "early-bird",
     name: "Early Bird",
     description: "Studied before 6 AM",
+    icon: Sun,
+    color: "from-yellow-300 to-amber-500",
+    glowColor: "yellow",
     condition: (_stats: UserStats) => true,
   },
   {
     id: "marathon-learner",
     name: " Marathon Learner",
     description: "Spent long hours learning",
+    icon: Zap,
+    color: "from-red-400 to-pink-600",
+    glowColor: "red",
     condition: (stats: UserStats) => stats.loginCount >= 5,
   },
   {
     id: "curious-mind",
     name: " Curious Mind",
     description: "Explored multiple topics",
+    icon: Star,
+    color: "from-indigo-400 to-blue-600",
+    glowColor: "indigo",
     condition: (stats: UserStats) => stats.coursesStarted >= 2,
   },
   {
     id: "focused-student",
     name: " Focused Student",
     description: "Completed lessons without skipping",
+    icon: Target,
+    color: "from-green-400 to-teal-500",
+    glowColor: "green",
     condition: (stats: UserStats) => stats.coursesCompleted >= 1,
   },
   {
     id: "legendary-learner",
     name: " Legendary Learner",
     description: "Elite learning achievement",
+    icon: Trophy,
+    color: "from-amber-300 to-yellow-600",
+    glowColor: "amber",
     condition: (stats: UserStats) => stats.streak >= 30,
->>>>>>> ee86fcfa2f44d2702145643bc86f7c3974b232db
   },
 ];
 
@@ -144,7 +165,6 @@ export function GamificationPanel() {
   const unlockedCount = badgesWithStatus.filter(b => b.unlocked).length;
 
   return (
-<<<<<<< HEAD
     <div className="space-y-8">
       {/* Progress Summary */}
       <div className="flex flex-wrap items-center justify-center gap-6 p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-background to-accent/10 border border-border/50">
@@ -153,50 +173,19 @@ export function GamificationPanel() {
             {unlockedCount}
           </div>
           <div className="text-sm text-muted-foreground">Badges Earned</div>
-=======
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-      {badgesWithStatus.map((badge) => (
-        <div
-          key={badge.id}
-          className={`group relative cursor-pointer rounded-xl border p-5 text-center transition-all duration-300 ease-out
-            ${
-              badge.unlocked
-                ? "border-violet-400 bg-gradient-to-br from-violet-100 via-purple-100 to-indigo-200 hover:from-violet-200 hover:via-purple-200 hover:to-indigo-300 hover:shadow-xl hover:shadow-violet-300/40 hover:-translate-y-1"
-                : "border-gray-300 bg-gray-100 opacity-70 hover:opacity-90"
-            }
-          `}
-        >
-          <div className="mb-2 text-2xl group-hover:blur-[1px]">
-            {badge.unlocked ? "🏅" : "🔒"}
-          </div>
-
-          <div className="text-lg font-semibold text-slate-800 transition-colors duration-300 group-hover:text-indigo-700 group-hover:blur-[1px]">
-            {badge.name}
-          </div>
-
-          <p className="mt-1 text-sm text-slate-600 group-hover:blur-[1px]">
-            {badge.unlocked ? badge.description : "Locked"}
-          </p>
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-600 via-violet-600 to-indigo-600 text-white opacity-0 transition-all duration-300 group-hover:opacity-95">
-            <div className="px-4 text-center">
-              <div className="mb-1 text-base font-semibold">
-                {badge.name}
-              </div>
-              <p className="text-sm opacity-90">
-                {badge.description}
-              </p>
-            </div>
-          </div>
->>>>>>> ee86fcfa2f44d2702145643bc86f7c3974b232db
         </div>
+
         <div className="w-px h-12 bg-border hidden sm:block" />
+
         <div className="text-center">
           <div className="text-4xl font-bold text-muted-foreground">
             {BADGES.length - unlockedCount}
           </div>
           <div className="text-sm text-muted-foreground">To Unlock</div>
         </div>
+
         <div className="w-px h-12 bg-border hidden sm:block" />
+
         <div className="text-center">
           <div className="text-4xl font-bold text-primary">
             {userStats.streak}
@@ -242,10 +231,10 @@ export function GamificationPanel() {
                       style={{ background: `linear-gradient(135deg, var(--${badge.glowColor}-400), var(--${badge.glowColor}-600))` }}
                     />
                   )}
-                  <Icon className={cn(
+                  {Icon && <Icon className={cn(
                     "h-8 w-8 relative z-10",
                     badge.unlocked ? "text-white" : "text-muted-foreground"
-                  )} />
+                  )} />}
                 </div>
               </div>
 
@@ -286,7 +275,7 @@ export default function BadgesPage() {
         <div className="absolute -top-40 -left-40 w-96 h-96 bg-gradient-to-br from-primary/20 to-purple-500/10 rounded-full blur-3xl opacity-60" />
         <div className="absolute -top-20 -right-40 w-80 h-80 bg-gradient-to-bl from-accent/15 to-cyan-500/10 rounded-full blur-3xl opacity-50" />
 
-        <div className="container relative py-12 md:py-16">
+        <div className="container relative pt-24 pb-12 md:pt-32 md:pb-16">
           <div className="text-center space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
             {/* Icon */}
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent text-white mb-2">

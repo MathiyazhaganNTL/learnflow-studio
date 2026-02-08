@@ -155,7 +155,7 @@ export default function CourseDetailPage() {
   };
 
   return (
-    <div className="py-7 md:py-12">
+    <div className="pt-24 pb-7 md:pt-28 md:pb-12">
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}

@@ -50,7 +50,7 @@ export default function MyCoursesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/40 py-10">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/40 pt-24 pb-10">
       <div className="container">
         <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
