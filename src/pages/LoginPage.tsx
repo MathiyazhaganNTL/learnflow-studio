@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { GraduationCap, Mail, Lock, Home } from 'lucide-react';
+import { Mail, Lock, Home } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ModernInput } from '@/components/ui/modern-input';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
 import { AuthIllustration } from '@/components/auth/AuthIllustration';
 import { RoleSelector } from '@/components/auth/RoleSelector';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -21,15 +22,21 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password, selectedRole);
+
       const searchParams = new URLSearchParams(window.location.search);
       const redirect = searchParams.get('redirect');
+
+      toast.success('Login successful!');
+
       if (redirect) {
         navigate(redirect);
       } else {
         navigate(selectedRole === 'learner' ? '/courses' : '/backoffice');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login failed:', error);
+      const message = error.message || 'Login failed. Please check your credentials.';
+      toast.error(message);
     } finally {
       setLoading(false);
     }

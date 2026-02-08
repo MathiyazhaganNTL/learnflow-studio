@@ -11,7 +11,7 @@ import { AuthIllustration } from '@/components/auth/AuthIllustration';
 
 export default function RegisterPage() {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const { register } = useAuth();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,31 +21,25 @@ export default function RegisterPage() {
         e.preventDefault();
         setLoading(true);
 
-        // Simulate API call to register user and notify admin/instructor
-        setTimeout(async () => {
-            try {
-                console.log('Registering user:', { name, email, role: 'learner' });
-                console.log('Notification sent to admin and instructor about new user signup');
+        try {
+            await register(email, password, name, 'learner');
+            toast.success('Account created successfully! Welcome to LearnSphere.');
 
-                toast.success('Account created successfully! Welcome to LearnSphere.');
-
-                // Auto login after registration
-                await login(email, password, 'learner');
-
-                const searchParams = new URLSearchParams(window.location.search);
-                const redirect = searchParams.get('redirect');
-                if (redirect) {
-                    navigate(redirect);
-                } else {
-                    navigate('/my-courses');
-                }
-            } catch (error) {
-                console.error('Registration failed:', error);
-                toast.error('Registration failed. Please try again.');
-            } finally {
-                setLoading(false);
+            const searchParams = new URLSearchParams(window.location.search);
+            const redirect = searchParams.get('redirect');
+            if (redirect) {
+                navigate(redirect);
+            } else {
+                navigate('/my-courses');
             }
-        }, 1500);
+        } catch (error: any) {
+            console.error('Registration failed:', error);
+            // Show more specific error messages if possible
+            const message = error.message || 'Registration failed. Please try again.';
+            toast.error(message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
