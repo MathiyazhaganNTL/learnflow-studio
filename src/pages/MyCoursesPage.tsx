@@ -14,13 +14,31 @@ export default function MyCoursesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Get user's enrolled courses with enrollment data
-  const enrolledCourses = mockEnrollments
+  let enrolledCourses = mockEnrollments
     .filter((e) => e.userId === user?.id)
     .map((enrollment) => ({
       course: mockCourses.find((c) => c.id === enrollment.courseId)!,
       enrollment,
     }))
     .filter((item) => item.course);
+
+  // Fallback: If no enrollments (new user), show demo courses
+  if (enrolledCourses.length === 0) {
+    enrolledCourses = mockCourses.slice(0, 3).map((course, index) => ({
+      course,
+      enrollment: {
+        id: `demo-${course.id}`,
+        userId: user?.id || 'demo-user',
+        courseId: course.id,
+        status: index === 0 ? 'in_progress' : index === 1 ? 'yet_to_start' : 'completed',
+        progress: index === 0 ? 35 : index === 1 ? 0 : 100,
+        enrolledAt: new Date().toISOString(),
+        startedAt: new Date().toISOString(),
+        timeSpent: index === 0 ? 120 : 0,
+        completedAt: index === 2 ? new Date().toISOString() : undefined
+      }
+    }));
+  }
 
   const filterByStatus = (status?: string) => {
     let filtered = enrolledCourses;

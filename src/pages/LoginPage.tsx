@@ -35,7 +35,21 @@ export default function LoginPage() {
       }
     } catch (error: any) {
       console.error('Login failed:', error);
-      const message = error.message || 'Login failed. Please check your credentials.';
+
+      let message = 'Login failed. Please check your credentials.';
+
+      // Map Firebase error codes to user-friendly messages
+      if (error.code === 'auth/invalid-credential' || error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        message = 'Invalid email or password. Please try again.';
+      } else if (error.code === 'auth/too-many-requests') {
+        message = 'Too many failed attempts. Please try again later.';
+      } else if (error.code === 'auth/user-disabled') {
+        message = 'This account has been disabled.';
+      } else if (error.message) {
+        // Fallback: try to use the message but clean it up if it looks like a raw code
+        message = error.message;
+      }
+
       toast.error(message);
     } finally {
       setLoading(false);
